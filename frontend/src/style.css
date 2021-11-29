@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .txt-help {
+        @apply text-lg font-semibold text-black select-none
+    }
+    .skills {
+        @apply flex mt-4 items-center
+    }
+    .icon {
+        @apply w-7 h-7 mr-4 text-dark-gray dark:text-blue-400
+    }
+}

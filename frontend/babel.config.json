@@ -1,0 +1,18 @@
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "targets": {
+            "node": "10"
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins": ["@babel/plugin-proposal-class-properties",
+      "@babel/plugin-transform-runtime",
+      "babel-plugin-react-icons"
+    ]
+  }
