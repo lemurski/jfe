@@ -40,7 +40,7 @@ export default function Homepage() {
             <div className="mt-4">
             <img className="h-40 mr-5 float-left rounded-lg" src={'/staticfiles/images/me.jpeg'}/>
             <p className='text-lg text-dark-gray text-justify leading-[1.9] dark:text-gray-200'>I am a 2nd year Medical Student at the University of Sheffield with a passion for web development. I am a fullstack developer that loves to learn and create.
-            So far I have  been working as solo-developer on the side but am now looking to combine my passion for medicine and programming togheter. When I am not studying or dveloping I love to play squash and hang out with friends.
+            So far I have  been working as solo-developer on the side but am now looking to combine my passion for medicine and programming togheter. When I am not studying or developing I love to play squash and hang out with friends.
             </p>
             </div>
             
@@ -50,7 +50,7 @@ export default function Homepage() {
                 <div>
                 <ul className="mt-4 text-lg text-dark-gray dark:text-gray-200">
                     <li className="mt-4"><span className="font-bold">2000</span> born in Sulechów - Poland.</li>
-                    <li className="mt-4"><span className="font-bold">2018</span> passed matura exams with results in the 95% percentile from Biology, Chemistry and English.</li>
+                    <li className="mt-4"><span className="font-bold">2018</span> passed matura exams with results in the 95th percentile from Biology, Chemistry and 100th percentile from English.</li>
                     <li className="mt-4"><span className="font-bold">2017 to present</span> developing multiple Web Applications.</li>
                     <li className="mt-4"><span className="font-bold">2020</span> started the Medicine MBChB course at the Sheffield Medical School.</li>
                 </ul>
