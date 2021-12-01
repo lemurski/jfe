@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import Navbar from './Navbar';
-import Homepage from './Homepage';
+import Ruter from './Ruter';
 
 
 export default function App() {
     return (
         <>
         <Navbar />
-        <Homepage />
+        <Ruter />
         </>
     )
 }
