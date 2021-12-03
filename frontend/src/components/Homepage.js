@@ -72,7 +72,7 @@ export default function Homepage() {
                     </div>
                     <div className="flex flex-col">
                         <img className='rounded-lg' src={'/staticfiles/images/t1.png'} />
-                        <div className="mt-5 text-xl"><span className="underline font-bold">Research Project</span><p> In 2021 I conducted a research project that compared the results of two different MRI T1 mapping techniques in patients with Idiopathic Pulmonray Fibrosis.</p></div>
+                        <div className="mt-5 text-xl"><span className="underline font-bold">Research Project</span><p> In 2021 I conducted a research project that compared the results of two different MRI T1 mapping techniques in patients with Idiopathic Pulmonary Fibrosis.</p></div>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@ export default function Homepage() {
                 <h2 className="underline font-semibold text-3xl text-dark-gray dark:text-gray-200">Contact</h2>
                 <div>
                     <ul className="text-lg text-dark-gray dark:text-gray-200">
-                        <li className="skills"><HiMail className="icon" /><span className="font-bold">kacperlem@gmai.com</span></li>
+                        <li className="skills"><HiMail className="icon" /><span className="font-bold">kacperlem@gmail.com</span></li>
                         <li className="skills"><SiFacebook className="icon" /><a href="https://www.facebook.com/kacper.lemanski.50" className="hover:underline font-bold">Kacper Lemański</a></li>
                         <li className="skills"><SiInstagram className="icon" /><a href="https://www.instagram.com/kacperlem/" className="hover:underline font-bold">kacperlem</a></li>
                     </ul>
