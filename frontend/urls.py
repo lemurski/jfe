@@ -3,8 +3,9 @@ from frontend import views
 
 urlpatterns = [
     path('', views.index),
-    path('generate/', views.index),
-    path('portfolio/', views.index),
+    path('cart/', views.index),
+    path('orders', views.index),
+    path('checkout', views.index),
 
 ]
 

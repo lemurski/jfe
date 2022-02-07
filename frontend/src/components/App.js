@@ -4,12 +4,12 @@ import Navbar from './Navbar';
 import Ruter from './Ruter';
 
 
+
 export default function App() {
     return (
         <>
-        <Navbar />
         <Ruter />
-        </>
+        </ >
     )
 }
 
