@@ -18,11 +18,13 @@ from channels.http import AsgiHandler
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cookie.settings')
 
-application = ProtocolTypeRouter({
-    'http': AsgiHandler(),
-    'websocket' : AuthMiddlewareStack(
-        URLRouter(
-            websocket_url_patterns
-        )
-    )
-})
+# application = ProtocolTypeRouter({
+#     'http': AsgiHandler(),
+#     'websocket' : AuthMiddlewareStack(
+#         URLRouter(
+#             websocket_url_patterns
+#         )
+#     )
+# })
+
+application = get_asgi_application()

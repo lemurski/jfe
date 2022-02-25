@@ -13,6 +13,10 @@ module.exports = withAnimations({
       colors: {
         'dark-gray' : '#1d1d1f',
         'light-yellow' : '#fcf8f0',
+        'strip-blue' : '#0570de',
+        'orange-burger' : '#f8ac32',
+        'orange-dark' : '#BD7809',
+        'payment-gray' : '#30313d'
       },
       fontFamily: {
         'calibre' : 'Montserrat',
@@ -28,6 +32,7 @@ module.exports = withAnimations({
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),    
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
   ],
 });

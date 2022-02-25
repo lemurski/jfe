@@ -5,12 +5,14 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from rest_framework import generics, status
 import json
-from .models import Food
+from .models import Food, FoodQuantity
 from .serializers import FoodSerializer, OrderSerializer
 from .models import Order
 import stripe
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 # Create your views here.
 
 stripe.api_key = 'sk_test_51KPqVjIe60pKGrAO6aLqyykqdVXnvNLlivtfrlQGMSgqtciN7ZTemLmWb7u0zyUoxOljg6NAzn0T1vJvrKq1IBPy00ss1E6kUK'
@@ -19,17 +21,120 @@ stripe.api_key = 'sk_test_51KPqVjIe60pKGrAO6aLqyykqdVXnvNLlivtfrlQGMSgqtciN7ZTem
 class save_stripe_info(APIView):
     
     def post(self, request, format=None):
+
+        
+
         intent = stripe.PaymentIntent.create(
             amount='150',
             currency='eur',
+            metadata={'cart':request.data['cart'],'table':request.data['table']},
             automatic_payment_methods={
                 'enabled': True,
             },
         )
-        
+
+
         return Response(status=status.HTTP_200_OK,data={
             'clientSecret': intent['client_secret']
         })
+
+
+# @csrf_exempt
+# def webhook(request):
+
+
+        
+#     print('hi')
+#     event = None
+#     payload = request.data
+
+#     try:
+#         event = json.loads(payload)
+#     except:
+#         print('Webhook error while parsing basic request.')
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+#     # Handle the event
+#     if event and event['type'] == 'payment_intent.succeeded':
+#         payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
+#         print('Payment for {} succeeded'.format(payment_intent['amount']))
+#         # Then define and call a method to handle the successful payment intent.
+#         # handle_payment_intent_succeeded(payment_intent)
+#     elif event['type'] == 'payment_method.attached':
+#         payment_method = event['data']['object']  # contains a stripe.PaymentMethod
+#         # Then define and call a method to handle the successful attachment of a PaymentMethod.
+#         # handle_payment_method_attached(payment_method)
+#     else:
+#         # Unexpected event type
+#         print('Unhandled event type {}'.format(event['type']))
+
+#     return Response(status=status.HTTP_200_OK)
+
+
+class webhook(APIView):
+
+    def post(self, request, format=None):
+        
+        event = None
+        payload = request.data
+        event = payload
+
+        # channel_layer = get_channel_layer()
+
+        print(event['type'])
+
+        # try:
+        #     event = json.loads(payload)
+        # except:
+        #     print('Webhook error while parsing basic request.')
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        # Handle the event
+        if event and event['type'] == 'payment_intent.succeeded':
+            payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
+            print('Payment for {} succeeded'.format(payment_intent['amount']))
+
+            message = json.loads(payment_intent['metadata']['cart'])
+            t = json.loads(payment_intent['metadata']['table'])
+
+            order = Order.objects.create(table=t,payed=True)
+            order.save()
+            
+
+
+            for i in message:
+                item = Food.objects.get(id=i['id'])
+
+
+                if 'note' in i:
+                    f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                else:
+                    f_num = FoodQuantity(food=item,order = order, number = i['num'])
+
+
+                    
+                
+                f_num.save()
+                print(f_num)                
+            
+            # async_to_sync(channel_layer.group_send)(
+            #     'orders',
+            #     {
+            #         'type': 'chat_message',
+            #         'message': 'event',
+            #     }
+            # )
+            # Then define and call a method to handle the successful payment intent.
+            # handle_payment_intent_succeeded(payment_intent)
+        elif event['type'] == 'payment_method.attached':
+            payment_method = event['data']['object']  # contains a stripe.PaymentMethod
+            # Then define and call a method to handle the successful attachment of a PaymentMethod.
+            # handle_payment_method_attached(payment_method)
+        else:
+            # Unexpected event type
+            print('Unhandled event type {}'.format(event['type']))
+
+        return Response(status=200)
 
 # class save_stripe_info(APIView):    
     
@@ -67,6 +172,20 @@ class FoodView(generics.ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
 
+
+class SetCart(APIView):
+    def post(self, request, format=None):
+
+        cart = request.data['cart']
+
+        print(cart)
+
+        self.request.session['cart'] = cart
+
+        data = self.request.session['cart']
+
+        return Response(data, status=status.HTTP_200_OK)
+
 class GetFood(APIView):
 
     def get(self, request, format=None):
@@ -75,7 +194,15 @@ class GetFood(APIView):
 
         serializer = FoodSerializer(queryset, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        lst = [{
+            'category' : ['Przystawki','Burgery','Podrasuj Burger', 'Sałatki', 'Dla Dzieci']
+        }]
+
+        data = serializer.data + lst
+
+       
+
+        return Response((serializer.data + lst), status=status.HTTP_200_OK)
 
 class GetCart(APIView):
 
@@ -98,24 +225,38 @@ class AddToCart(APIView):
 
         item = request.data['cart']
         
-
+        
+        print(item)
         
         if 'cart' in self.request.session:
             order = self.request.session['cart']
-            order.append(item)
+            
+            item_in_order = False
+
+            for o in order:
+                if o['item'] == item:
+                    o['num'] += 1
+                    item_in_order = True
+            
+            if not item_in_order:
+                item_num = {'item': item, 'num':1}
+                order.append(item_num)
+
             (self.request.session['cart']) = order
-            print('tutaj')
+                
+
         else:
             self.request.session['cart'] = []
             order = self.request.session['cart']
-            order.append(item)
+            item_num = {'item': item, 'num':1}
+            order.append(item_num)
+            print('here')
             (self.request.session['cart']) = order            
-            print('reset')
 
         data = self.request.session['cart']
-            
 
         print(data)
+
 
         return Response(data, status=status.HTTP_200_OK)
        
@@ -124,8 +265,9 @@ class AddToCart(APIView):
 class ClearCart(APIView):
 
     def post(self, request, format=None):
-
-        del self.request.session['cart']
+        
+        if 'cart' in request.session:
+            del self.request.session['cart']
 
         return Response(status=status.HTTP_200_OK)
 
@@ -154,6 +296,20 @@ class GetOrders(APIView):
 
 
 
+class ChangeToPaid(APIView):
+    def post(self, request, format=None):
+
+        i = request.data['id']
+
+        order = Order.objects.get(id=i)
+
+        order.payed = True
+
+        order.save()
+        
+        return Response(status=status.HTTP_200_OK)
+
+
 
 
 class MakeOrder(APIView):
@@ -161,21 +317,31 @@ class MakeOrder(APIView):
     def post(self, request, format=None):
 
         if request.data['cart']:
-            lst = request.data['cart']
+            message = request.data['cart']
+
+            t = request.data['table']
+
+            print('here')
             
-            order = Order.objects.create()
+            order = Order.objects.create(table=t,payed=False)
             order.save()
-            print(lst)
-
-
-            for id in lst:
-                item = Food.objects.get(id=id)
-                order.ordered.add(item)
-                print(item)
-
-            print('Done!')
             
-            print(order.ordered.all())
+
+
+            for i in message:
+                item = Food.objects.get(id=i['id'])
+
+
+                if 'note' in i:
+                    f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                else:
+                    f_num = FoodQuantity(food=item,order = order, number = i['num'])
+
+
+                    
+                
+                f_num.save()
+              
             
             return Response(status=status.HTTP_200_OK)
         else:

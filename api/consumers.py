@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
-from .models import Order, Food
+from .models import Order, Food, FoodQuantity
 from .serializers import OrderSerializer
 from asgiref.sync import async_to_sync
 
@@ -34,22 +34,44 @@ class OrderConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
 
         message = text_data_json['message']
+
+        t = text_data_json['table']
+
+
         
-        order = Order.objects.create()
+
+        print(message)
+
+        
+        order = Order.objects.create(table=t,payed=False)
         order.save()
         
 
 
-        for id in message:
-            item = Food.objects.get(id=id)
-            order.ordered.add(item)
-            print(item)
+        for i in message:
+            item = Food.objects.get(id=i['id'])
+
+
+            if 'note' in i:
+                f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+            else:
+                f_num = FoodQuantity(food=item,order = order, number = i['num'])
+
+
+                
+            
+            f_num.save()
+            print(f_num)
+       
+        
+        
+
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
             }
         )
 

@@ -10,5 +10,8 @@ urlpatterns = [
     path('get_cart', views.GetCart.as_view()),
     path('get_orders', views.GetOrders.as_view()),
     path('delete_order', views.DeleteOrder.as_view()),
-    path('payment', views.save_stripe_info.as_view())
+    path('payment', views.save_stripe_info.as_view()),
+    path('set_cart', views.SetCart.as_view()),
+    path('webhook', views.webhook.as_view()),
+    path('set_paid', views.ChangeToPaid.as_view()),
 ]

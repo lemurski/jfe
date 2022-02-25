@@ -2,16 +2,28 @@ from django.db.models import fields
 from rest_framework import serializers
 from api import models
 
+
+class FoodQuantitySerializer(serializers.ModelSerializer):
+    
+    item = serializers.ReadOnlyField(source='food.title')
+    
+    class Meta:
+        model = models.FoodQuantity
+        fields = ('number', 'item','note')
+
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Food
-        fields = ('id', 'title', 'description', 'image', 'price','note', 'ingredients')
+        fields = ('id', 'title', 'description', 'image', 'price','note', 'ingredients','category','number')
 
 
 class OrderSerializer(serializers.ModelSerializer):
 
-    ordered = FoodSerializer(read_only=True, many=True)
+    ordered = FoodQuantitySerializer(source='foodquantity_set',read_only=True, many=True)
+    
 
     class Meta:
         model = models.Order
-        fields = ('id', 'ordered','code')
+        fields = ('id','ordered','code','table','payed')
+
+

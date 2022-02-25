@@ -2,9 +2,9 @@ import {CardElement, PaymentElement, useElements, useStripe} from "@stripe/react
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 
-const orderSocket = new WebSocket(
-  'ws://' + window.location.host + '/ws/order_socket/'
-)
+// const orderSocket = new WebSocket(
+//   'ws://' + window.location.host + '/ws/order_socket/'
+// )
 
 export default function CheckoutForm() {
 
@@ -15,33 +15,60 @@ export default function CheckoutForm() {
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [Cart,SetCart] = useState([])
+    const [Ready,SetReady] = useState(false)
+    const [number, SetNumber] = useState(0)
+
+
+    
+    const pp = () => {
+      console.log('ready')
+      SetReady(true)    
+    }
 
 
     const GetCart = () => {
       axios.get('/api/get_cart').then((response) => {
           SetCart(response.data)
+          
       })
     }
+
+
+    
 
     useEffect(() => {
         GetCart()
     },[])
 
+    const press = () => {
+      let note = Cart.map((x) => ({'item': x.item.id, 'num': x.num}) )
 
-    const Send = () => {
-      let list = Cart.map((x) => x.id )
       
-      orderSocket.send(JSON.stringify({
-          'message': list
-      }))
-    }   
 
+
+    }
+
+    // const Send = () => {
+    //   let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note}) )
+    //   let note = Cart.map((x) => x.note)
+
+      
+      
+    //   orderSocket.send(JSON.stringify({
+    //       'message': list,
+    //   }))
+    // }
+
+    useEffect(() => {
+      console.log(elements)
+    })
 
     useEffect(() => {
       if (!stripe) {
         return;
       }
-  
+      
+
       const clientSecret = new URLSearchParams(window.location.search).get(
         "payment_intent_client_secret"
       );
@@ -76,6 +103,21 @@ export default function CheckoutForm() {
         }
       }
     
+    const renderLoading = () => {
+      return(
+        <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-orange-burger">
+          <div className="w-[300px] mt-40  mx-auto h-[350px]">
+          <dotlottie-player
+                  src='/staticfiles/images/loading.lottie'
+                  autoplay
+                  loop
+                  style={{ height: '100%', width: '100%' }}
+          />
+                    <div className="text-center font-bold -mt-9 text-3xl">Prosimy czekać</div>
+          </div>
+        </div>
+      )
+    }
    
 
     const handleSubmit = async (event) => {
@@ -94,20 +136,12 @@ export default function CheckoutForm() {
 
       const { error } = await stripe.confirmPayment({
         elements,
-        redirect : 'if_required',
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: "http://127.0.0.1:8000/",
-          receipt_email: email
+          return_url: "http://127.0.0.1:8000/complete",
+          // receipt_email: email
         },
         
-      }).then((response) => {
-        if (response.error) {
-          console.log(response.error)
-        }
-        else {
-          Send()
-        }
       })
 
       if (error.type === "card_error" || error.type === "validation_error") {
@@ -116,21 +150,21 @@ export default function CheckoutForm() {
         setError("An unexpected error occured.");
       }
 
-      }  
+      }
       
 
     return (
 
-        <form onSubmit={handleSubmit} className='p-3 w-full my-auto h-[40rem] flex flex-col mx-0 rounded-md bg-gray-50'>
-            <label htmlFor='email' className='ml-[2px]'>Email Address</label>
-            <input type="email" placeholder="jenny.rosen@example.com" autoComplete='off' required id='email' value={email} onChange={(event) => { setEmail(event.target.value)}} className=" mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "/>
-            <PaymentElement id='payment-element' className="mt-1 p-3" id="card-element" onChange={handleChange}/>
-            <button className="bg-gray-300 rounded-md p-2" disabled={isLoading || !stripe || !elements} id="submit">
+        <form onSubmit={handleSubmit} className='p-3 w-full my-auto min-h-[400px] transition-all flex max-w-[615px] mx-auto flex-col rounded-md bg-dark-gray'>
+              {Ready ? null : renderLoading()}
+            <PaymentElement onReady={pp} id='payment-element' className="mt-3 px-[2px]" id="card-element" onChange={handleChange}/>
+            <button className="bg-strip-blue text-white mb-0 mt-5 rounded-md p-2" disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
-                {isLoading ? <div className="spinner" id="spinner">Hi</div> : "Pay now"}
+                {isLoading ? <div className="spinner" id="spinner">Hi</div> : "Zapłać teraz"}
               </span>
             </button>
             <div role="alert">{error}</div>
+            {/* <button className="bg-white" onClick={Send}>SEND</button> */}
             <div>{message}</div>
         </form>
 
