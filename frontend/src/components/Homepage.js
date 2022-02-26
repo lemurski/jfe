@@ -128,7 +128,7 @@ export default function Homepage() {
                 <div onClick={CloseDetails} className="absolute top-[0.55rem] right-2"> <MdClear className='h-6 text-orange-burger w-6' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <div className='text-2xl font-bold leading-7 text-orange-burger '>{Item.title}</div>
-                <img className='mt-6 rounded-md w-52 h-44' src={Item.image}></img>
+                <img className='mt-6 rounded-md w-56 h-44' src={Item.image}></img>
                 <p className="mt-6 text-center font-semibold">{Item.description}</p>
                 <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full resize-none h-28 rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-orange-dark text-gray-400 bg-payment-gray focus:ring-opacity-75'></textarea>
                 </div>
