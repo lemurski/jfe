@@ -138,7 +138,7 @@ export default function CheckoutForm() {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: "http://127.0.0.1:8000/complete",
+          return_url: "https://restaurant-7cvacj2cra-lm.a.run.app/complete",
           // receipt_email: email
         },
         
