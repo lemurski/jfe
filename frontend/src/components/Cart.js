@@ -111,10 +111,10 @@ export default function Cart(props) {
   
 
   return (
-    <div className="min-h-screen w-full h-auto">
+    <div className="min-h-screen w-full bg-orange-burger h-auto">
       <div
         id="home"
-        className="relative flex flex-col min-h-screen w-full h-auto px-[4%] lg:px-[15%] transition-all duration-500 bg-orange-burger"
+        className="relative flex flex-col w-full h-auto px-[4%] min-h-[660px] lg:px-[15%] transition-all duration-500 "
       >
         <Navbar cartlen={CartLen} />
         <div className="flex flex-col mt-[92px] mb-auto">
