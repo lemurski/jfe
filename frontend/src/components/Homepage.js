@@ -79,7 +79,8 @@ export default function Homepage() {
 
     const FetchMenu = () => {
         axios.get('/api/menu').then((response) => {
-            SetCategories((response.data).at(-1)['category'])
+            const data = response.data
+            SetCategories(data[data.length - 1]['category'])
             var menu = (response.data).slice(0,-1)
             SetMenu(menu)
             
