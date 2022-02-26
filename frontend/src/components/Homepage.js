@@ -18,6 +18,7 @@ export default function Homepage() {
     const[CartLen,SetCartLen] = useState(0)
     const[Categories,SetCategories] = useState([])
     const[search] = useSearchParams()
+    const[loading,Setloading] = useState(true)
 
 
     const DisplayItem = (food) => {
@@ -31,6 +32,7 @@ export default function Homepage() {
         console.log(search.get('id'))
 
     }
+
 
 
     const CloseDetails = () => {
@@ -118,6 +120,21 @@ export default function Homepage() {
     )
 
 
+    const renderLoading = () => {
+        return(
+          <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-orange-burger">
+            <div className="w-[300px] mt-40  mx-auto h-[350px]">
+            <dotlottie-player
+                    src='/staticfiles/images/loading.lottie'
+                    autoplay
+                    loop
+                    style={{ height: '100%', width: '100%' }}
+            />
+                      <div className="text-center font-bold -mt-9 text-3xl">Witamy w <br/> Burger House!</div>
+            </div>
+          </div>
+        )
+      }
     
 
     const ItemDetails = () => {
@@ -142,12 +159,14 @@ export default function Homepage() {
         FetchMenu()
         GetCart()
         TableNum()
+        setTimeout(() => {Setloading(false)},2500)
     },[])
 
     return (
         <div className="min-h-screen w-full h-auto">
         <Navbar cartlen={CartLen} />
         <div id='home' className="dark:bg-orange-burger relative min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] transition-all duration-500 bg-light-yellow">
+            {loading ? renderLoading() : null}
             <div className="mb-6">
                 {renderAll}
             </div>
