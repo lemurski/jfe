@@ -121,7 +121,7 @@ export default function Cart(props) {
           <div className="text-lg font-bold">Twoje Zamówienie</div>
           {showMenu}
         </div>
-        <div className="w-full mb-4 flex flex-col">
+        <div className="w-full mb-4 mt-4 flex flex-col">
           <div className="flex">
             <div className="text-lg font-semibold mb-3">Podsumowanie</div>
             <div className="text-lg font-semibold ml-auto mr-0">

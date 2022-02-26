@@ -152,7 +152,7 @@ export default function Homepage() {
                 {renderAll}
             </div>
             {Displayed ? ItemDetails() : null}
-        <div className="flex"> 
+        <div className="flex h-7"> 
          </div>
         </div>
         </div>
