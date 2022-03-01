@@ -32,3 +32,9 @@ body {
 canvas {
     background: #000000;
 }
+
+
+.scroll::-webkit-scrollbar {
+        display: none;
+      }
+}

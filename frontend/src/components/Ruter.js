@@ -7,6 +7,7 @@ import Order from './Orders';
 import Checkout from './CheckOut';
 import Complete from './Complete';
 import SelectPayment from './SelectPayment';
+import Home from './Home';
 
 
 export default function Ruter() {
@@ -14,7 +15,7 @@ export default function Ruter() {
     return (
         <Router>
             <Routes>
-                <Route exact path="/table/:id" element={<Homepage />} />
+                <Route exact path="/table/:id" element={<Home />} />
                 <Route path='cart' element = {<Cart />} />
                 <Route path='orders' element= {<Order />} />
                 <Route path='checkout' element={<Checkout />} />

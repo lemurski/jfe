@@ -10,8 +10,14 @@ module.exports = withAnimations({
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      flex: {
+        '0': '0 0 auto'
+      },
       colors: {
-        'dark-gray' : '#1d1d1f',
+        'dark-gray' : '#1f2027',
+        'light-gray' : '#2a2e3d',
+        'text-gray' : '#42444a',
+        'red-burger' : '#ff2b32',
         'light-yellow' : '#fcf8f0',
         'strip-blue' : '#0570de',
         'orange-burger' : '#f8ac32',
@@ -19,7 +25,7 @@ module.exports = withAnimations({
         'payment-gray' : '#30313d'
       },
       fontFamily: {
-        'calibre' : 'Montserrat',
+        'poppins' : 'Poppins',
       }
     },
   },
