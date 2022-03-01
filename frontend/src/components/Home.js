@@ -131,7 +131,7 @@ export default function Home() {
     
     const renderAll = () => (
         <>
-        <div className="flex scroll flex-nowrap pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-10">
+        <div className="flex scroll flex-nowrap pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-6">
                 <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='flex-0 hover:border-b-[3px] border-red-burger hover:text-white'>Przystawki</h3>
                 <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Burgery</h3>
                 <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Sałatki</h3>
@@ -174,9 +174,9 @@ export default function Home() {
     const ItemDetails = () => {
         return (
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
-            <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div>
-            <div className="fixed rounded-lg items-center pt-6 z-50 flex flex-col left-0 right-0 m-auto top-0 bottom-0 w-[22.5rem] h-[36rem] bg-dark-gray">
-                <div onClick={CloseDetails} className="absolute top-[0.55rem] right-2"> <MdClear className='h-6 text-red-burger w-6' /> </div>
+            {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
+            <div className="fixed rounded-lg items-center pt-6 z-50 flex flex-col left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
+                <div onClick={CloseDetails} className="absolute top-[0.55rem] right-2"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <img className='rounded-2xl w-56 h-44' src={Item.image}></img>
                 <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
