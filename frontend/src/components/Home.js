@@ -21,6 +21,7 @@ export default function Home() {
     const[search] = useSearchParams()
     const[loading,Setloading] = useState(true)
     const[selectedCategory,SetselectedCategory] = useState('Przystawki')
+    const[itemloading,Setitemloading] = useState(false)
 
 
     const cat = ['Przystawki','Hamburgery','Dla Dzieci','Napoje','Sałatki','Desery']
@@ -96,21 +97,29 @@ export default function Home() {
                
     }
 
-    
+    const handlecatchange = (e) => {
+        SetselectedCategory(e.target.textContent)
+        Setitemloading(true)
+        setTimeout(() => {Setitemloading(false)},400)
+    }
+
+    useEffect(() => {
+        console.log(itemloading)
+    },[itemloading])
 
     const showMenu = () => {
         return( 
             filtered.map((food,k) =>
-            <motion.div key={food.id} variants={{
-                hidden: {opacity:0, x: -50 * k},
+            <motion.div key={k} variants={{
+                hidden: {opacity:0, y: -50 * k},
                 visible: (k) => ({
                     opacity:1,
-                    x: 0,
-                    transition: {delay: k * 0.05}
+                    y: 0,
+                    transition: {delay: k * 0.05, duration: 0.4}
                 }),
-                end: {opacity:0, x:50 * k}
+                end: {opacity:0}
             }} 
-             onClick={() => DisplayItem(food.id)} value={food.id} className="mx-auto px-3 py-4 shadow-lg flex bg-light-gray border-[1.5px] border-gray-800 mt-6 h-36 rounded-xl">
+            initial='hidden' animate='visible' exit='end' onClick={() => DisplayItem(food.id)} value={food.id} className="mx-auto px-3 py-4 shadow-lg flex bg-light-gray border-[1.5px] border-gray-800 mt-6 h-36 rounded-xl">
             <div className="w-[100px] flex-none  ml-0 mr-auto h-[100px] my-auto rounded-full">
             <img className='w-[100px] h-[100px] rounded-full' src={food.image}></img>
             </div>
@@ -132,19 +141,19 @@ export default function Home() {
     const renderAll = () => (
         <>
         <div className="flex scroll flex-nowrap pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-6">
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='flex-0 hover:border-b-[3px] border-red-burger hover:text-white'>Przystawki</h3>
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Burgery</h3>
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Sałatki</h3>
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Dla Dzieci</h3>
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Napoje</h3>
-                <h3 onClick={(e) =>{SetselectedCategory(e.target.textContent)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Desery</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='flex-0 hover:border-b-[3px] border-red-burger hover:text-white'>Przystawki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Burgery</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Sałatki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Dla Dzieci</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Napoje</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Desery</h3>
             </div>
             {/* {loading ? renderLoading() : null} */}
             {/* <div className="mb-6">
                 {renderAll}
             </div> */}
-            <AnimatePresence>
-            {showMenu()}
+            <AnimatePresence >
+            {itemloading ? null : showMenu()}
             </AnimatePresence>
             <AnimatePresence>
             {Displayed ? ItemDetails() : null}
