@@ -171,7 +171,7 @@ export default function Home() {
     const renderLoading = () => {
         return(
           <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-dark-gray">
-            <div className="w-[300px] mt-40  mx-auto h-[350px]">
+            <div className="w-[300px] mt-32 mx-auto h-[350px]">
             <dotlottie-player
                     src='/staticfiles/images/burgerek.lottie'
                     autoplay
@@ -196,14 +196,16 @@ export default function Home() {
         return (
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
-            <div className="rounded-lg relative items-center pt-6 z-50 flex flex-col left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
-                <div onClick={CloseDetails} className="absolute top-[0.55rem] right-2"> <MdClear className='h-8 text-red-burger w-8' /> </div>
+            <div className="fixed rounded-lg z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
+                <div className="relative w-full h-full flex-col flex pt-6 items-center">
+                <div onClick={CloseDetails} className="absolute top-3 right-3"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <img className='rounded-2xl w-56 h-44' src={Item.image}></img>
                 <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
                 <p className="mt-[18px] text-center text-sm text-gray-400 font-semibold">{Item.description}</p>
                 <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full resize-none h-28 rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger text-gray-300 bg-light-gray focus:ring-opacity-50'></textarea>
                 <button onClick={add} className="w-full py-3 bg-red-burger text-gray-100 tracking-wide text-lg mt-6 mb-0 font-semibold border-dark-gray rounded-xl">{Item.price} zł</button>
+                </div>
                 </div>
             </div>
             </motion.div>
