@@ -1,6 +1,8 @@
 import {CardElement, PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
+
 
 // const orderSocket = new WebSocket(
 //   'ws://' + window.location.host + '/ws/order_socket/'
@@ -105,15 +107,15 @@ export default function CheckoutForm() {
     
     const renderLoading = () => {
       return(
-        <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-orange-burger">
+        <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-dark-gray">
           <div className="w-[300px] mt-40  mx-auto h-[350px]">
           <dotlottie-player
-                  src='/staticfiles/images/loading.lottie'
+                  src='/staticfiles/images/burgerek.lottie'
                   autoplay
                   loop
                   style={{ height: '100%', width: '100%' }}
           />
-                    <div className="text-center font-bold -mt-9 text-3xl">Prosimy czekać</div>
+                    <div className="text-center font-bold text-white -mt-9 text-3xl">Prosimy czekać</div>
           </div>
         </div>
       )
@@ -154,8 +156,8 @@ export default function CheckoutForm() {
       
 
     return (
-
-        <form onSubmit={handleSubmit} className='p-3 w-full my-auto min-h-[400px] transition-all flex max-w-[615px] mx-auto flex-col rounded-md bg-dark-gray'>
+        <>
+        <form onSubmit={handleSubmit} className='p-3 w-full my-auto min-h-[400px] transition-all flex max-w-[615px] mx-auto flex-col rounded-md bg-light-gray'>
               {Ready ? null : renderLoading()}
             <PaymentElement onReady={pp} id='payment-element' className="mt-3 px-[2px]" id="card-element" onChange={handleChange}/>
             <button className="bg-strip-blue text-white mb-0 mt-5 rounded-md p-2" disabled={isLoading || !stripe || !elements} id="submit">
@@ -167,6 +169,10 @@ export default function CheckoutForm() {
             {/* <button className="bg-white" onClick={Send}>SEND</button> */}
             <div>{message}</div>
         </form>
+
+        <Link className="bg-red-burger text-white text-center mb-10 w-3/5 mx-auto rounded-md py-3" to="/payment">Cofnij</Link>
+
+        </>
 
 
     )

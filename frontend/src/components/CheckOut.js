@@ -74,7 +74,7 @@ export default function Checkout() {
     return (
         
         <div className="min-h-screen w-full h-auto">
-            <div id='home' className="dark:bg-orange-burger relative flex flex-col min-h-screen pt-[4.25rem] w-full px-[5%] lg:px-[15%] transition-all duration-500 bg-light-yellow">
+            <div id='home' className="relative flex flex-col min-h-screen pt-[4.25rem] w-full px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
             <Navbar cartlen={CartLen} />
             
             {clientSecret && (

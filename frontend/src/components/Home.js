@@ -22,6 +22,8 @@ export default function Home() {
     const[loading,Setloading] = useState(true)
     const[selectedCategory,SetselectedCategory] = useState('Przystawki')
     const[itemloading,Setitemloading] = useState(false)
+    const[width,Setwidth] = useState('98px')
+    const[leftmargin,Setleftmargin] = useState('0px')
 
 
     const cat = ['Przystawki','Hamburgery','Dla Dzieci','Napoje','Sałatki','Desery']
@@ -44,6 +46,7 @@ export default function Home() {
     const CloseDetails = () => {
         SetDisplayed(false)
         SetItem({id: 15, title: 'Hamburger', description: 'Smaczny Hamburgerson',ingredients: '["salami","ser"]'})
+        SetNote(null)
         
        
     }
@@ -54,6 +57,7 @@ export default function Home() {
         SetDisplayed(false)
         SetCartLen(CartLen + 1)
         SetItem({id: 15, title: 'Hamburger', description: 'Smaczny Hamburgerson',ingredients: '["salami","ser"]'})
+        SetNote(null)
     }
 
 
@@ -100,12 +104,12 @@ export default function Home() {
     const handlecatchange = (e) => {
         SetselectedCategory(e.target.textContent)
         Setitemloading(true)
+        console.dir(e.target)
+        Setwidth(e.target.offsetWidth)
+        Setleftmargin(e.target.offsetLeft)
         setTimeout(() => {Setitemloading(false)},400)
     }
 
-    useEffect(() => {
-        console.log(itemloading)
-    },[itemloading])
 
     const showMenu = () => {
         return( 
@@ -140,13 +144,14 @@ export default function Home() {
     
     const renderAll = () => (
         <>
-        <div className="flex scroll flex-nowrap pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-6">
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='flex-0 hover:border-b-[3px] border-red-burger hover:text-white'>Przystawki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Burgery</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Sałatki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Dla Dzieci</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Napoje</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3 hover:border-b-[3px] border-red-burger flex-0 hover:text-white'>Desery</h3>
+        <div className="flex scroll flex-nowrap relative pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-6">
+                <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger hover:text-white'>Przystawki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Burgery</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Sałatki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Dla Dzieci</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Napoje</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Desery</h3>
             </div>
             {/* {loading ? renderLoading() : null} */}
             {/* <div className="mb-6">
@@ -168,17 +173,24 @@ export default function Home() {
           <div className="top-0 z-20 flex flex-col left-0 bottom-0 right-0 fixed bg-dark-gray">
             <div className="w-[300px] mt-40  mx-auto h-[350px]">
             <dotlottie-player
-                    src='/staticfiles/images/bur.lottie'
+                    src='/staticfiles/images/burgerek.lottie'
                     autoplay
                     loop
                     style={{ height: '100%', width: '100%' }}
             />
-                      <div className="text-center text-white font-bold -mt-9 text-3xl">Witamy w <br/> Burger House!</div>
+                      <div className="text-center text-white font-bold -mt-9 text-3xl">Witamy w <br/> Stół Na Wół!</div>
             </div>
           </div>
         )
       }
     
+    const renderNavBar = () => {
+        return(
+            <>
+            <Navbar cartlen={CartLen} />
+            </>
+        )
+     }
 
     const ItemDetails = () => {
         return (
@@ -203,14 +215,14 @@ export default function Home() {
         FetchMenu()
         GetCart()
         TableNum()
-        setTimeout(() => {Setloading(false)},2500)
+        setTimeout(() => {Setloading(false)},2000)
     },[])
 
     return (
         <div className="min-h-screen font-poppins w-full h-auto">
-        <Navbar cartlen={CartLen} />
+        {Displayed ? null : renderNavBar()}
             <div id='home' className="relative min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
-                {renderAll()}
+            {loading ? renderLoading() : renderAll()}
             </div>
         </div>
     )

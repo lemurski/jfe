@@ -41,10 +41,10 @@ export default function Navbar(props) {
     
 
     return (
-        <div className="fixed top-0 flex z-30 bg-clip-padding backdrop-filter dark:bg-clip-padding dark:backdrop-filter bg-yellow-100 dark:bg-dark-gray dark:backdrop-blur-lg dark:bg-opacity-80 backdrop-blur-lg bg-opacity-40 items-center px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
+        <div className="fixed top-0 flex z-30 dark:bg-dark-gray dark:backdrop-blur-lg  items-center px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
             <Link to="/table/1" className="flex dark:text-red-burger text-dark-gray transition-all cursor-pointer items-center hover:scale-105 ease-in-out duration-500">
                 <FaHamburger className="w-10 h-10"/>
-                <div className="ml-2 sm:flex hidden transition-all text-2xl font-semibold">Burger House</div>
+                <div className="ml-2 sm:flex hidden transition-all text-2xl font-semibold">Stół Na Wół</div>
             </Link>
             
             <Link to='/cart' className="w-12 h-12 relative ml-auto mr-0 hover:scale-105 transition-all bg-dark-gray text-white duration-300 rounded-lg flex dark:bg-red-burger">
