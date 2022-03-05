@@ -196,7 +196,7 @@ export default function Home() {
         return (
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
-            <div className="fixed rounded-lg items-center pt-6 z-50 flex flex-col left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
+            <div className="rounded-lg relative items-center pt-6 z-50 flex flex-col left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
                 <div onClick={CloseDetails} className="absolute top-[0.55rem] right-2"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <img className='rounded-2xl w-56 h-44' src={Item.image}></img>
