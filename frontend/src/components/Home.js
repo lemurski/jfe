@@ -198,7 +198,7 @@ export default function Home() {
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
             <div className="fixed rounded-lg z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
                 <div className="relative w-full h-full flex-col flex pt-6 items-center">
-                <div onClick={CloseDetails} className="absolute top-7 right-3"> <MdClear className='h-8 text-red-burger w-8' /> </div>
+                <div onClick={CloseDetails} className="absolute top-20 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <img className='rounded-2xl w-56 h-44' src={Item.image}></img>
                 <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
