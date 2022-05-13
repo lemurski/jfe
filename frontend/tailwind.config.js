@@ -9,6 +9,9 @@ module.exports = withAnimations({
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      backdropContrast: {
+        60: '90%',
+      },
       boxShadow:{
         'neon-shadow': '0px 0px 20px 5px rgb(0 0 0 / 0.25);'
       },

@@ -31,7 +31,7 @@ export default function Navbar_home(props) {
         }
         else {
             return (
-                <div className="fixed top-0 flex z-30 items-center backdrop-blur-lg px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
+                <div className="fixed top-0 flex z-30 items-center backdrop-blur-lg backdrop-contrast-60 px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
                 <Link to="/" className="flex dark:text-red-burger text-dark-gray transition-all cursor-pointer items-center hover:scale-105 ease-in-out duration-500">
                     <GiBull className="w-10 h-10"/>
                 </Link>
