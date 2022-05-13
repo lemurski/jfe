@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django_eventstream import send_event
 # Create your views here.
 
 stripe.api_key = 'sk_test_51KPqVjIe60pKGrAO6aLqyykqdVXnvNLlivtfrlQGMSgqtciN7ZTemLmWb7u0zyUoxOljg6NAzn0T1vJvrKq1IBPy00ss1E6kUK'
@@ -106,16 +107,19 @@ class webhook(APIView):
                 item = Food.objects.get(id=i['id'])
 
 
-                if 'note' in i:
+                if 'note' in i and i['note'] != None:
                     f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
                 else:
                     f_num = FoodQuantity(food=item,order = order, number = i['num'])
 
 
+
                     
                 
                 f_num.save()
-                print(f_num)                
+
+            send_event('test', 'message', {'text': 'hello world'})
+
             
             # async_to_sync(channel_layer.group_send)(
             #     'orders',
@@ -200,7 +204,7 @@ class GetFood(APIView):
 
         data = serializer.data + lst
 
-       
+        send_event('test', 'message', {'text': 'hello world'})
 
         return Response((serializer.data + lst), status=status.HTTP_200_OK)
 
@@ -316,12 +320,13 @@ class MakeOrder(APIView):
 
     def post(self, request, format=None):
 
+        
+
         if request.data['cart']:
             message = request.data['cart']
 
             t = request.data['table']
 
-            print('here')
             
             order = Order.objects.create(table=t,payed=False)
             order.save()
@@ -332,7 +337,7 @@ class MakeOrder(APIView):
                 item = Food.objects.get(id=i['id'])
 
 
-                if 'note' in i:
+                if 'note' in i and i['note'] != None:
                     f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
                 else:
                     f_num = FoodQuantity(food=item,order = order, number = i['num'])
@@ -341,7 +346,10 @@ class MakeOrder(APIView):
                     
                 
                 f_num.save()
-              
+
+            
+            send_event('test', 'message', {'text': 'hello world'})
+   
             
             return Response(status=status.HTTP_200_OK)
         else:

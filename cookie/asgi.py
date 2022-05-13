@@ -15,6 +15,9 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 from api.routing import websocket_url_patterns
 from channels.http import AsgiHandler
+from django.conf.urls import url
+from channels.auth import AuthMiddlewareStack
+import django_eventstream
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cookie.settings')
 
@@ -27,4 +30,13 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cookie.settings')
 #     )
 # })
 
-application = get_asgi_application()
+# application = get_asgi_application()
+
+application = ProtocolTypeRouter({
+    'http': URLRouter([
+        url(r'^events/', AuthMiddlewareStack(
+            URLRouter(django_eventstream.routing.urlpatterns)
+        ), { 'channels': ['test'] }),
+        url(r'', get_asgi_application()),
+    ]),
+})

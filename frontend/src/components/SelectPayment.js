@@ -25,7 +25,7 @@ export default function SelectPayment() {
     const GetCart = () => {
         axios.get('/api/get_cart').then((response) => {
 
-
+            console.log(response.data)
 
             SetCart(response.data)
             let len = 0
@@ -67,16 +67,20 @@ export default function SelectPayment() {
     const renderPayCash = () => {
         return (
             <div className="flex m-auto flex-col w-full">
-                <form onSubmit={Send} className="w-full flex flex-col p-3 bg-light-gray shadow-lg rounded-md">
+                <form onSubmit={Send} className="w-full flex flex-col p-3 h-72 justify-between bg-light-gray shadow-lg rounded-md">
+                    <div>
                     <label htmlFor='text' className='text-[0.93rem] text-white ml-[2px]'>Imię i nazwisko</label>
-                    <input type="text" placeholder="Imię i nazwisko" autoComplete='off' required id='email' value={email} onChange={(event) => { setEmail(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg w-full text-gray-400 transition-all rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-orange-dark focus:ring-opacity-75 "/>
-                    <label htmlFor='text' className='text-[0.93rem] mt-6 text-white ml-[2px]'>Numer stolika</label>
-                    <input type="number" placeholder="Numer stolika" autoComplete='off' required id='email' value={number} onChange={(event) => { setNumber(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg text-gray-400 w-full transition-all rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-orange-dark focus:ring-opacity-75 "/>
-                    <button className="bg-red-burger text-white mb-0 mt-6 rounded-md p-3" id="submit">
+                    <input type="text" placeholder="Imię i nazwisko" autoComplete='off' required id='email' value={email} onChange={(event) => { setEmail(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg w-full text-gray-400 transition-all rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger focus:ring-opacity-75 "/>
+                    </div>
+                    <div>
+                    <label htmlFor='text' className='text-[0.93rem] text-white ml-[2px]'>Numer stolika</label>
+                    <input type="number" placeholder="Numer stolika" autoComplete='off' required id='email' value={number} onChange={(event) => { setNumber(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg text-gray-400 w-full transition-all rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger focus:ring-opacity-75 "/>
+                    </div>
+                    <button className="bg-red-burger text-white font-semibold mb-0  rounded-md p-3" id="submit">
                         Zamawiam i płacę przy kasie
                     </button>
                 </form>
-                <button onClick={() => {setPayCash(false)}} className="bg-red-burger text-white mt-6 rounded-md py-3 mx-auto w-3/5">
+                <button onClick={() => {setPayCash(false)}} className="bg-red-burger text-white mt-6 rounded-md py-3 mx-auto w-[150px]">
                         Cofnij
                     </button>
             </div>
@@ -105,7 +109,7 @@ export default function SelectPayment() {
 
     return(
         <div className="min-h-screen w-full h-auto">
-            <div id='home' className="relative flex flex-col min-h-screen pt-[4.25rem] w-full px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
+            <div id='home' className="relative flex flex-col min-h-screen w-full px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
             <Navbar cartlen={CartLen} />
                        
             {PayCash ? renderPayCash() : renderOptions()}

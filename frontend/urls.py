@@ -9,5 +9,6 @@ urlpatterns = [
     path('complete', views.index),
     path('payment', views.index),
     path('table/<int:id>', views.index),
+    path('kontakt', views.index),
 ]
 

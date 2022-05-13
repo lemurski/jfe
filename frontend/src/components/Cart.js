@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Link, useLocation } from "react-router-dom";
+import {TiShoppingCart} from "react-icons/ti"
 import CheckoutForm from "./CheckoutForm";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
@@ -36,50 +37,52 @@ export default function Cart(props) {
   }, []);
 
   const increase = (e) => {
-    let c = Cart
+    let c = Cart;
 
-    c[e].num += 1;       
+    c[e].num += 1;
 
-    axios.post('/api/set_cart', {
-        'cart': c,
-    }).then((response) => {
-        SetCart(response.data)
+    axios
+      .post("/api/set_cart", {
+        cart: c,
+      })
+      .then((response) => {
+        SetCart(response.data);
         let len = 0;
         var total = 0;
         for (const i of response.data) {
-            len += i.num;
-            total += parseFloat(i.item.price) * parseFloat(i.num);
+          len += i.num;
+          total += parseFloat(i.item.price) * parseFloat(i.num);
         }
         SetCartLen(len);
         SetTotal(total);
-    })
-
-  }
+      });
+  };
 
   const decrease = (e) => {
-      let c = Cart
+    let c = Cart;
 
-      c[e].num -= 1;
+    c[e].num -= 1;
 
-      if (c[e].num === 0) {
-          c.splice(e, 1);
-      }
-         
+    if (c[e].num === 0) {
+      c.splice(e, 1);
+    }
 
-      axios.post('/api/set_cart', {
-        'cart': c,
-    }).then((response) => {
-        SetCart(response.data)
+    axios
+      .post("/api/set_cart", {
+        cart: c,
+      })
+      .then((response) => {
+        SetCart(response.data);
         let len = 0;
         var total = 0;
         for (const i of response.data) {
-            len += i.num;
-            total += parseFloat(i.item.price) * parseFloat(i.num);
+          len += i.num;
+          total += parseFloat(i.item.price) * parseFloat(i.num);
         }
         SetCartLen(len);
         SetTotal(total);
-    })
-  }
+      });
+  };
 
   const showMenu = Cart.map((food, key) => (
     <div
@@ -100,43 +103,78 @@ export default function Cart(props) {
             {(parseFloat(food.item.price) * parseFloat(food.num)).toFixed(2)} zł
           </div>
           <div className="flex mt-6">
-            <AiOutlineMinus onClick={() => {decrease(key)}} className='mr-10 w-6 h-6' />
-            <AiOutlinePlus onClick={() => {increase(key)}}className=" w-6 h-6" />
+            <AiOutlineMinus
+              onClick={() => {
+                decrease(key);
+              }}
+              className="mr-10 w-6 h-6"
+            />
+            <AiOutlinePlus
+              onClick={() => {
+                increase(key);
+              }}
+              className=" w-6 h-6"
+            />
           </div>
         </div>
       </div>
     </div>
   ));
 
-  
+  const renderpayment = () => {
+    if (CartLen) {
+      return (
+        <>
+          <div
+            id="home"
+            className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
+          >
+            <div className="flex flex-col overflow-scroll mt-[92px] mb-auto">
+              <div className="text-lg text-gray-200 font-bold">
+                Twoje Zamówienie
+              </div>
+              {showMenu}
+            </div>
+          </div>
+          <div className="w-full px-[4%] bottom-0 py-4 bg-dark-gray fixed text-gray-200 flex flex-col">
+            <div className="flex">
+              <div className="text-lg font-semibold mb-3">Podsumowanie</div>
+              <div className="text-lg font-semibold ml-auto mr-0">
+                {Total.toFixed(2)} zł
+              </div>
+            </div>
+            <Link
+              to="/payment"
+              className="rounded w-full shadow-lg py-3 text-center tracking-wide bg-red-burger text-white font-bold"
+            >
+              Płatność
+            </Link>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <div
+          id="home"
+          className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
+        >
+          <div class="w-full m-auto flex flex-col p-3 bg-light-gray h-96 shadow-lg rounded-md ">
+          <TiShoppingCart className="w-32 h-32 text-red-burger mt-5 mx-auto" />
+          <h2 className="text-gray-200 text-center font-bold mt-3 text-xl">Twój koszyk jest pusty</h2>
+          <p className='text-gray-400 text-center font-semibold'>Wygląda na to że nic jeszcze nie zamówiłeś</p>
+          <Link to="/table/1" className="flex mx-auto mt-8 bg-red-burger transition-all text-white cursor-pointer w-[150px] h-12 rounded-md items-center hover:scale-105 ease-in-out duration-500">
+          <h2 className="mx-auto font-bold">Powrót do menu</h2>
+          </Link>
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-dark-gray h-auto">
-      <div
-        id="home"
-        className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
-      >
-        <Navbar cartlen={CartLen} />
-        <div className="flex flex-col overflow-scroll mt-[92px] mb-auto">
-          <div className="text-lg text-gray-200 font-bold">Twoje Zamówienie</div>
-          {showMenu}
-        </div>
-        
-      </div>
-      <div className="w-full px-[4%] bottom-0 py-4 bg-dark-gray fixed text-gray-200 flex flex-col">
-          <div className="flex">
-            <div className="text-lg font-semibold mb-3">Podsumowanie</div>
-            <div className="text-lg font-semibold ml-auto mr-0">
-              {Total.toFixed(2)} zł
-            </div>
-          </div>
-          <Link
-            to="/payment"
-            className="rounded w-full shadow-lg py-3 text-center tracking-wide bg-red-burger text-white font-bold"
-          >
-            Płatność
-          </Link>
-        </div>
+      <Navbar cartlen={CartLen} />
+      {renderpayment()}
     </div>
   );
 }

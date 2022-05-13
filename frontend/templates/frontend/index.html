@@ -6,11 +6,15 @@
     <title>Kacper Lemanski</title>
     {% load static %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
+    <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
+<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
 </head>
 <body>
     

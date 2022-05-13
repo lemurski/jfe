@@ -11,6 +11,8 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export default function Home() {
+
+
     
     const[Menu,SetMenu] = useState([])
     const[Item,SetItem] = useState()
@@ -30,6 +32,8 @@ export default function Home() {
 
     const filtered = Menu.filter(item => item['category'] === selectedCategory)
 
+    
+
     const DisplayItem = (food) => {
         const filtered = Menu.filter(item => item['id'] == food)
         SetItem(filtered[0])
@@ -37,10 +41,6 @@ export default function Home() {
         Displayed ? SetDisplayed(false) : SetDisplayed(true)
     }
 
-    const TableNum = () => {
-        console.log(search.get('id'))
-
-    }
 
 
     const CloseDetails = () => {
@@ -92,7 +92,6 @@ export default function Home() {
     const FetchMenu = () => {
         axios.get('/api/menu').then((response) => {
             const data = response.data
-            console.log(data[data.length - 1]['category'])
             SetCategories(data[data.length - 1]['category'])
             var menu = (response.data).slice(0,-1)
             SetMenu(menu)
@@ -102,11 +101,16 @@ export default function Home() {
     }
 
     const handlecatchange = (e) => {
+        var element = document.getElementById('first')
+        element.classList.remove('text-white')
+        element.id = ''
         SetselectedCategory(e.target.textContent)
         Setitemloading(true)
-        console.dir(e.target)
         Setwidth(e.target.offsetWidth)
         Setleftmargin(e.target.offsetLeft)
+        e.target.classList.add('text-white')
+        e.target.id = 'first'
+
         setTimeout(() => {Setitemloading(false)},400)
     }
 
@@ -124,11 +128,11 @@ export default function Home() {
                 end: {opacity:0}
             }} 
             initial='hidden' animate='visible' exit='end' onClick={() => DisplayItem(food.id)} value={food.id} className="mx-auto px-3 py-4 shadow-lg flex bg-light-gray border-[1.5px] border-gray-800 mt-6 h-36 rounded-xl">
-            <div className="w-[100px] flex-none  ml-0 mr-auto h-[100px] my-auto rounded-full">
-            <img className='w-[100px] h-[100px] rounded-full' src={food.image}></img>
+            <div className="w-[100px] flex-none  ml-0 h-[100px] my-auto rounded-full">
+            <img className='w-[100px] h-[100px] rounded-2xl' src={food.image}></img>
             </div>
-            <div className='flex ml-4 flex-col'>
-                <h1 className="text-[0.95rem] font-medium mr-3 text-white">{food.title}</h1>
+            <div className='flex ml-4 mr-auto flex-col'>
+                <h1 className="text-[0.95rem] font-medium mr-3 overflow-hidden truncate line-clamp-1 text-white">{food.title}</h1>
                 <p className="whitespace-normal text-gray-500 max-h-[242px] line-clamp-2 mr-4 mt-1 overflow-hidden truncate text-sm">{food.description}</p>
                 <div className='flex bg-red-burger rounded-md mb-0 mt-auto w-16'><h2 className="font-semibold m-auto p-1 text-center text-gray-50 text-[0.9rem] mt-auto mb-0">{food.price} zł</h2></div>
                 
@@ -144,14 +148,14 @@ export default function Home() {
     
     const renderAll = () => (
         <>
-        <div className="flex scroll flex-nowrap relative pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-6">
+        <div className="flex scroll flex-nowrap relative pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-5">
                 <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger hover:text-white'>Przystawki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Burgery</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Sałatki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Dla Dzieci</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Napoje</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 hover:text-white'>Desery</h3>
+                <h3 id='first' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Sałatki</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Dla Dzieci</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Napoje</h3>
+                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Desery</h3>
             </div>
             {/* {loading ? renderLoading() : null} */}
             {/* <div className="mb-6">
@@ -178,7 +182,7 @@ export default function Home() {
                     loop
                     style={{ height: '100%', width: '100%' }}
             />
-                      <div className="text-center text-white font-bold -mt-9 text-3xl">Witamy w <br/> Stół Na Wół!</div>
+                      <div className="text-center text-white font-bold -mt-9 text-3xl">Witamy w <br/>Wół Na Stół!</div>
             </div>
           </div>
         )
@@ -198,7 +202,7 @@ export default function Home() {
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
             <div className="fixed rounded-lg z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen h-screen bg-dark-gray">
                 <div className="relative w-full h-full flex-col flex pt-6 items-center">
-                <div onClick={CloseDetails} className="absolute top-20 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
+                <div onClick={CloseDetails} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                 <div className="flex flex-col px-4 my-auto text-gray-200 items-center">
                 <img className='rounded-2xl w-56 h-44' src={Item.image}></img>
                 <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
@@ -216,7 +220,6 @@ export default function Home() {
     useEffect(() => {
         FetchMenu()
         GetCart()
-        TableNum()
         setTimeout(() => {Setloading(false)},2000)
     },[])
 
@@ -225,6 +228,7 @@ export default function Home() {
         {Displayed ? null : renderNavBar()}
             <div id='home' className="relative min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
             {loading ? renderLoading() : renderAll()}
+
             </div>
         </div>
     )

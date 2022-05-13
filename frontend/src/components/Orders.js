@@ -2,13 +2,18 @@ import React, {useState, useEffect} from 'react'
 import Navbar from './Navbar'
 import axios from 'axios'
 
+var es = new ReconnectingEventSource('/events/');
+
+
 
 export default function Order() {
 
     const [Orders,SetOrders] = useState([])
     const [UnPaid,SetUnPaid] = useState([])
 
-
+    
+    
+    
 
     
     const GetCart = () => {
@@ -27,18 +32,20 @@ export default function Order() {
 
     const changePaid = (e) => {
         axios.post('/api/set_paid',{'id': e.target.value}).then(response => {
-            console.log(response.data)
+            console.log(response.data)  
             GetCart()
         })
     }
 
     useEffect(() => {
-        
-        // GetCart()
-
-        const interval = setInterval(() => {
+        es.addEventListener('message', function (e) {
             GetCart();
-        },10000)
+        }, false);
+        GetCart()
+
+        // const interval = setInterval(() => {
+        //     GetCart();
+        // },10000)
 
         // const orderSocket = new WebSocket(
         //     'ws://' + window.location.host + '/ws/order_socket/'
@@ -88,7 +95,7 @@ export default function Order() {
     const showUnpaid = (UnPaid).map((order,key) => 
 
         <div key={key} className="w-[80%] relative p-3 flex flex-col bg-gray-50 mt-5 h-64 rounded-lg">
-            <div className="absolute bottom-2 flex flex-col right-2 border-2 border-black text-right    rounded-sm text-base px-2">
+            <div className="absolute bottom-2 flex flex-col right-2 border-2 border-black text-right rounded-sm text-base px-2">
                 <div>Nr stolika - {order.table}</div>
                 <div>Nr zamówienia - {order.code}</div>
             </div>
@@ -111,10 +118,9 @@ export default function Order() {
     
     return(
         <div className="min-h-screen flex px-6 bg-dark-gray w-full h-auto">
-            <div className="w-1/2 min-h-screen h-auto">
+            <div className="w-1/2 min-h-screen border-red-burger border-r-4 h-auto">
             {showUnpaid}
             </div>
-            <div className="min-h-screen border-2 absolute left-[35.5rem] border-orange-burger h-auto"></div>
             <div id='home' className="relative justify-items-center items-center flex flex-col min-h-screen w-full h-auto px-[5%] transition-all duration-500">
             
             {showMenu}

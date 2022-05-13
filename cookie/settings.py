@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--$%_u0rzlim(96ky6vk!h54__$jx!&5%!*u^eh0kf%m&ydm*v5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['restaurant-7cvacj2cra-lm.a.run.app','127.0.0.1','kacperlem.dev']
 
@@ -32,12 +32,14 @@ ALLOWED_HOSTS = ['restaurant-7cvacj2cra-lm.a.run.app','127.0.0.1','kacperlem.dev
 # Application definition
 
 INSTALLED_APPS = [
-    # 'channels',
+    'channels',
+    'django_eventstream',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'rest_framework',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'django_grip.GripMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cookie.wsgi.application'
 
-# ASGI_APPLICATION = 'cookie.asgi.application'
+ASGI_APPLICATION = 'cookie.asgi.application'
 
 # CHANNEL_LAYERS = {
 #     'default': {
