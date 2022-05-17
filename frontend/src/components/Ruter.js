@@ -11,6 +11,7 @@ import Home from './Home';
 import Glowna from './Glowna';
 import Kontakt from './Kontakt';
 import Bottom from './Bottom'
+import Wybor from './Wybor';
 
 
 export default function Ruter() {
@@ -21,12 +22,13 @@ export default function Ruter() {
             <Routes>
                 <Route exact path="/" element={<Glowna />} />
                 <Route path="/table/:id" element={<Home />} />
-                <Route path='cart' element = {<Cart />} />
+                <Route path='/cart/:id' element = {<Cart />} />
                 <Route path='kontakt' element = {<Kontakt />} />
                 <Route path='orders' element= {<Order />} />
-                <Route path='checkout' element={<Checkout />} />
+                <Route path='/checkout/:id' element={<Checkout />} />
                 <Route path='complete' element={<Complete />} />
-                <Route path='payment' element={<SelectPayment />} />
+                <Route path='/payment/:id' element={<SelectPayment />} />
+                <Route path='choice' element={<Wybor />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <Bottom />

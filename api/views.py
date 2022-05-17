@@ -325,32 +325,63 @@ class MakeOrder(APIView):
         if request.data['cart']:
             message = request.data['cart']
 
-            t = request.data['table']
+            if 'ulica' in request.data:
+                ulica = request.data['ulica']
+                budynek = request.data['budynek']
+                kod = request.data['kod']
+                miasto = request.data['miasto']
+                notatka = request.data['notatka']
+                imie = request.data['imie']
 
-            
-            order = Order.objects.create(table=t,payed=False)
-            order.save()
-            
-
-
-            for i in message:
-                item = Food.objects.get(id=i['id'])
-
-
-                if 'note' in i and i['note'] != None:
-                    f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
-                else:
-                    f_num = FoodQuantity(food=item,order = order, number = i['num'])
-
-
-                    
+                order = Order.objects.create(delivery=True,payed=False,ulica=ulica,budynek=budynek,kod=kod,miasto=miasto,notatka=notatka,imie=imie)
+                order.save()
                 
-                f_num.save()
+                for i in message:
+                    item = Food.objects.get(id=i['id'])
 
-            
-            send_event('test', 'message', {'text': 'hello world'})
-   
-            
-            return Response(status=status.HTTP_200_OK)
+
+                    if 'note' in i and i['note'] != None:
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                    else:
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'])
+
+
+                        
+                    
+                    f_num.save()
+                
+                send_event('test', 'message', {'text': 'hello world'})
+
+                
+                return Response(status=status.HTTP_200_OK)
+            else:
+
+                t = request.data['table']
+
+                
+                order = Order.objects.create(table=t,payed=False)
+                order.save()
+                
+
+
+                for i in message:
+                    item = Food.objects.get(id=i['id'])
+
+
+                    if 'note' in i and i['note'] != None:
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                    else:
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'])
+
+
+                        
+                    
+                    f_num.save()
+
+                
+                send_event('test', 'message', {'text': 'hello world'})
+    
+                
+                return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

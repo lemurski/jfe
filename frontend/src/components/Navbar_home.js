@@ -55,7 +55,7 @@ export default function Navbar_home(props) {
                     <div onClick={changeSidebar} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                     <div className="flex my-auto h-1/2 text-2xl justify-evenly flex-col items-center">
                     <button className='text-white text-2xl font-semibold' onClick={scroll}>O nas</button>
-                    <a href="/table/1">Menu</a>
+                    <a href='/choice'>Menu</a>
                     <a href='/kontakt'>Kontakt</a>
                     <h2>Galeria</h2>
                     </div>

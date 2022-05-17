@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {TiShoppingCart} from "react-icons/ti"
 import CheckoutForm from "./CheckoutForm";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 export default function Cart(props) {
-  const location = useLocation();
   const [Cart, SetCart] = useState([]);
   const [CartLen, SetCartLen] = useState(0);
   const [Total, SetTotal] = useState(0);
+  let {id} = useParams()
+
+  const lnk = ('/payment/' + id.toString())
+  const men = ('/table/' + id.toString())
 
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -144,7 +147,7 @@ export default function Cart(props) {
               </div>
             </div>
             <Link
-              to="/payment"
+              to={lnk}
               className="rounded w-full shadow-lg py-3 text-center tracking-wide bg-red-burger text-white font-bold"
             >
               Płatność
@@ -158,11 +161,11 @@ export default function Cart(props) {
           id="home"
           className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
         >
-          <div class="w-full m-auto flex flex-col p-3 bg-light-gray h-96 shadow-lg rounded-md ">
+          <div className="w-full m-auto flex flex-col p-3 bg-light-gray h-96 shadow-lg rounded-md ">
           <TiShoppingCart className="w-32 h-32 text-red-burger mt-5 mx-auto" />
           <h2 className="text-gray-200 text-center font-bold mt-3 text-xl">Twój koszyk jest pusty</h2>
           <p className='text-gray-400 text-center font-semibold'>Wygląda na to że nic jeszcze nie zamówiłeś</p>
-          <Link to="/table/1" className="flex mx-auto mt-8 bg-red-burger transition-all text-white cursor-pointer w-[150px] h-12 rounded-md items-center hover:scale-105 ease-in-out duration-500">
+          <Link to={men} className="flex mx-auto mt-8 bg-red-burger transition-all text-white cursor-pointer w-[150px] h-12 rounded-md items-center hover:scale-105 ease-in-out duration-500">
           <h2 className="mx-auto font-bold">Powrót do menu</h2>
           </Link>
           </div>

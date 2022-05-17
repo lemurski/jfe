@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {MdClear} from 'react-icons/md'
 
 
@@ -17,7 +17,6 @@ export default function Homepage() {
     const[Note,SetNote] = useState()
     const[CartLen,SetCartLen] = useState(0)
     const[Categories,SetCategories] = useState([])
-    const[search] = useSearchParams()
     const[loading,Setloading] = useState(true)
 
 

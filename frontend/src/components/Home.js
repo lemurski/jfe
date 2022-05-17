@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {MdClear} from 'react-icons/md'
 import { AnimatePresence,motion } from 'framer-motion';
 
@@ -20,12 +20,12 @@ export default function Home() {
     const[Note,SetNote] = useState()
     const[CartLen,SetCartLen] = useState(0)
     const[Categories,SetCategories] = useState([])
-    const[search] = useSearchParams()
     const[loading,Setloading] = useState(true)
     const[selectedCategory,SetselectedCategory] = useState('Przystawki')
     const[itemloading,Setitemloading] = useState(false)
     const[width,Setwidth] = useState('98px')
     const[leftmargin,Setleftmargin] = useState('0px')
+
 
 
     const cat = ['Przystawki','Hamburgery','Dla Dzieci','Napoje','Sałatki','Desery']
@@ -37,18 +37,14 @@ export default function Home() {
     const DisplayItem = (food) => {
         const filtered = Menu.filter(item => item['id'] == food)
         SetItem(filtered[0])
-        
         Displayed ? SetDisplayed(false) : SetDisplayed(true)
     }
-
-
+    
 
     const CloseDetails = () => {
         SetDisplayed(false)
         SetItem({id: 15, title: 'Hamburger', description: 'Smaczny Hamburgerson',ingredients: '["salami","ser"]'})
         SetNote(null)
-        
-       
     }
 
     const add = () => {
@@ -148,7 +144,7 @@ export default function Home() {
     
     const renderAll = () => (
         <>
-        <div className="flex scroll flex-nowrap relative pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-5">
+        <div className="flex cursor-pointer scroll flex-nowrap relative pb-4 text-lg text-text-gray font-semibold overflow-x-auto mt-5">
                 <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
                 <h3 id='first' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
                 <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>

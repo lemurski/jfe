@@ -1,7 +1,7 @@
 import {CardElement, PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 // const orderSocket = new WebSocket(
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 // )
 
 export default function CheckoutForm() {
-
+    let {id} = useParams()
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('');
     const stripe = useStripe();
@@ -22,6 +22,10 @@ export default function CheckoutForm() {
 
 
     
+    const redirect = () => {
+      window.location.href = ('/payment/' + id.toString())
+    }
+
     const pp = () => {
       console.log('ready')
       SetReady(true)    
@@ -170,7 +174,7 @@ export default function CheckoutForm() {
             <div>{message}</div>
         </form>
 
-        <Link className="bg-red-burger text-white text-center mb-10 w-3/5 mx-auto rounded-md py-3" to="/payment">Cofnij</Link>
+        <button className="bg-red-burger text-white text-center mb-10 w-[120px] mx-auto rounded-md py-3" onClick={redirect}>Cofnij</button>
 
         </>
 

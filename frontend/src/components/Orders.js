@@ -70,22 +70,55 @@ export default function Order() {
         })
     }
 
+    const rendertable = (e) => {
+        return (
+            <>
+            <div>Nr stolika - {e.table}</div>
+            <div>Nr zamówienia - {e.code}</div>
+            </>
+        )
+    }
+
+    const renderdelivery = (e) => {
+        return (
+            <>
+            <div>Ulica - {e.ulica} {e.budynek}</div>
+            <div>Kod Pocztowy - {e.kod}</div>
+            </>
+        )
+    }
+
+    const rendervs = (e) => {
+        if (e.delivery === true) {
+            return (
+                renderdelivery(e)
+            )
+        }
+        else {
+            return (
+                rendertable(e)
+            )
+        }
+    }
+
     const showMenu = (Orders).map((order,key) => 
 
-        <div key={key} className="w-[50%] relative p-3 flex flex-col bg-gray-50 mt-5 h-64 rounded-lg">
-            <div className="absolute bottom-2 flex flex-col right-2 border-2 border-black text-right    rounded-sm text-base px-2">
-                <div>Nr stolika - {order.table}</div>
-                <div>Nr zamówienia - {order.code}</div>
-            </div>
+        <div key={key} className="w-[50%] relative p-3 flex flex-col bg-gray-50 mt-5 min-h-64 rounded-lg">
+            
             {order.ordered.map((item, key) =>
                 <div className='text-xl font-semibold' key={key}>
                     {item.number} x {item.item} {item.note ? ('- ' + item.note) : null}
                 </div>
             )}
-        <div className='w-full flex mt-auto mb-0'>
-                <button value={order.id} onClick={DeleteOrder} className='w-1/2 bg-green-400 text-white ml-0 mr-auto py-3 rounded'>DONE</button>
+            
+            <div className="flex flex-col mt-3 w-fit border-2 border-black rounded-sm text-base px-2">
+                {rendervs(order)}
+            </div>    
+        <div className='w-full mt-3 flex mb-0'>
+                <button value={order.id} onClick={DeleteOrder} className='w-full bg-lime-500 text-white mx-auto py-3 rounded'>DONE</button>
         
         </div>
+        
         </div>
 
            
@@ -94,18 +127,17 @@ export default function Order() {
 
     const showUnpaid = (UnPaid).map((order,key) => 
 
-        <div key={key} className="w-[80%] relative p-3 flex flex-col bg-gray-50 mt-5 h-64 rounded-lg">
-            <div className="absolute bottom-2 flex flex-col right-2 border-2 border-black text-right rounded-sm text-base px-2">
-                <div>Nr stolika - {order.table}</div>
-                <div>Nr zamówienia - {order.code}</div>
-            </div>
+        <div key={key} className="w-[80%] relative p-3 flex flex-col bg-gray-50 mt-5 min-h-64 rounded-lg">  
             {order.ordered.map((item, key) =>
                 <div className='text-xl font-semibold' key={key}>
                     {item.number} x {item.item} {item.note ? ('- ' + item.note) : null}
                 </div>
             )}
-        <div className='w-full flex mt-auto mb-0'>
-                <button value={order.id} onClick={changePaid} className='w-1/2 bg-green-400 text-white ml-0 mr-auto py-3 rounded'>CHANGE TO PAID</button>
+        <div className="flex flex-col mt-3 w-fit border-2 border-black rounded-sm text-base px-2">
+                {rendervs(order)}
+            </div>    
+        <div className='w-full mt-3 flex mb-0'>
+                <button value={order.id} onClick={changePaid} className='w-full bg-lime-500 text-white mx-auto py-3 rounded'>Zmień na zapłacone</button>
         
         </div>
         </div>

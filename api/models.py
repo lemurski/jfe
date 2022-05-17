@@ -53,7 +53,14 @@ class Order(models.Model):
     
     code = models.IntegerField(default=generate_unique_code)
     time = models.DateTimeField(auto_now_add=True)
-    table = models.IntegerField()
+    table = models.IntegerField(blank=True, null=True)
+    notatka = models.CharField(max_length=100, blank=True, null=True)
+    ulica = models.CharField(max_length=100, blank=True, null=True)
+    imie = models.CharField(max_length=100, blank=True, null=True)
+    budynek = models.CharField(max_length=100, blank=True, null=True)
+    miasto = models.CharField(max_length=100, blank=True, null=True)
+    kod = models.CharField(max_length=100, blank=True, null=True)
+    delivery = models.BooleanField(default=False)
     ordered = models.ManyToManyField(Food, through='FoodQuantity')
     payed = models.BooleanField(default=True)
 
