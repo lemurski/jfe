@@ -6,6 +6,7 @@ urlpatterns = [
     path('menu',views.GetFood.as_view()),
     path('order', views.MakeOrder.as_view()),
     path('cart', views.AddToCart.as_view()),
+    path('add_to_kasa', views.AddtoCartKasa.as_view()),
     path('clear', views.ClearCart.as_view()),
     path('get_cart', views.GetCart.as_view()),
     path('get_orders', views.GetOrders.as_view()),

@@ -36,7 +36,7 @@ export default function Navbar_home(props) {
                     <GiBull className="w-10 h-10"/>
                 </Link>
                 <Link to="/" className="mx-auto text-red-burger sm:flex transition-all my-auto font-Coustard text-4xl font-bold">
-                <div className="">Wół Na Stół</div>
+                <div className="">Wół I Stół</div>
                 </Link>
                 
                 <GiHamburgerMenu onClick={changeSidebar} className="w-8 h-8 -mt-1 mr-0 text-red-burger"/>
@@ -50,17 +50,21 @@ export default function Navbar_home(props) {
     const renderSidebar = () => {
         if (sidebar) {
             return (
-                <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
-                <div className="fixed flex flex-col text-white text-2xl font-semibold items-center pb-[4.25rem] top-0 left-0 bg-dark-gray z-50 w-screen h-screen">
-                    <div onClick={changeSidebar} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
-                    <div className="flex my-auto h-1/2 text-2xl justify-evenly flex-col items-center">
-                    <button className='text-white text-2xl font-semibold' onClick={scroll}>O nas</button>
-                    <a href='/choice'>Menu</a>
-                    <a href='/kontakt'>Kontakt</a>
-                    <h2>Galeria</h2>
-                    </div>
+                <div>
+                    <AnimatePresence >
+                    <motion.div layout animate={{x: 0}} initial={{x: 400}} exit={{x: 400}}>
+                        <div className="fixed flex flex-col text-white text-2xl font-semibold items-center pb-[4.25rem] top-0 left-0 bg-dark-gray z-50 w-screen h-screen">
+                            <div onClick={changeSidebar} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
+                            <div className="flex my-auto h-1/2 text-2xl justify-evenly flex-col items-center">
+                            <button className='text-white text-2xl font-semibold' onClick={scroll}>O nas</button>
+                            <a href='/choice'>Menu</a>
+                            <a href='/kontakt'>Kontakt</a>
+                            <h2>Galeria</h2>
+                            </div>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
                 </div>
-                </motion.div>
             )
         }
         else {
@@ -72,9 +76,8 @@ export default function Navbar_home(props) {
     return (
         <>
         {renderNavBar()}
-        <AnimatePresence>
+        
         {renderSidebar()}
-        </AnimatePresence>
         </>
     )
 }

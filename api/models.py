@@ -40,6 +40,8 @@ class Food(models.Model):
     ingredients = models.TextField(max_length=300,default='')
     category = models.CharField(max_length=50, choices=choices, default=Burgery)
     number = models.IntegerField(default=1)
+    dodatkowe_mieso = models.BooleanField(default=False)
+
 
     
 
@@ -71,4 +73,10 @@ class FoodQuantity(models.Model):
     number = models.IntegerField(default=1)
     note = models.CharField(max_length=200, blank=True)
     code = models.IntegerField(default=generate_unique_code)
+    dodatkowe_mieso = models.BooleanField(default=False)
+    frytki = models.BooleanField(default=False)
+    bataty = models.BooleanField(default=False)
+    krazki = models.BooleanField(default=False)
+    kulki = models.BooleanField(default=False)
+
     

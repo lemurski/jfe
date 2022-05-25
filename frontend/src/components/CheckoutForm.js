@@ -144,7 +144,7 @@ export default function CheckoutForm() {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: "https://restaurant-7cvacj2cra-lm.a.run.app/complete",
+          return_url: "http://127.0.0.1:8000/complete",
           // receipt_email: email
         },
         
@@ -160,11 +160,11 @@ export default function CheckoutForm() {
       
 
     return (
-        <>
+        <div className="my-auto flex-col flex">
         <form onSubmit={handleSubmit} className='p-3 w-full my-auto min-h-[400px] transition-all flex max-w-[615px] mx-auto flex-col rounded-md bg-light-gray'>
               {Ready ? null : renderLoading()}
             <PaymentElement onReady={pp} id='payment-element' className="mt-3 px-[2px]" id="card-element" onChange={handleChange}/>
-            <button className="bg-strip-blue text-white mb-0 mt-5 rounded-md p-2" disabled={isLoading || !stripe || !elements} id="submit">
+            <button className="bg-red-burger text-white mb-0 mt-5 rounded-md p-3" disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
                 {isLoading ? <div className="spinner" id="spinner">Hi</div> : "Zapłać teraz"}
               </span>
@@ -174,9 +174,9 @@ export default function CheckoutForm() {
             <div>{message}</div>
         </form>
 
-        <button className="bg-red-burger text-white text-center mb-10 w-[120px] mx-auto rounded-md py-3" onClick={redirect}>Cofnij</button>
+        <button className="text-lg font-semibold text-red-burger text-center mt-4 w-[120px] mx-auto rounded-md py-3" onClick={redirect}>Cofnij</button>
 
-        </>
+        </div>
 
 
     )

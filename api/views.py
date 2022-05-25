@@ -23,10 +23,21 @@ class save_stripe_info(APIView):
     
     def post(self, request, format=None):
 
+        cart=request.data['cart']
+        print(cart)
+
+        price = 0
+        cart = json.loads(cart)
+
+        for i in cart:
+            price+=(i['price_combined'])
         
+        price=price*100
+        price=int(price)
+        price = str(price)
 
         intent = stripe.PaymentIntent.create(
-            amount='150',
+            amount=price,
             currency='eur',
             metadata={'cart':request.data['cart'],'table':request.data['table']},
             automatic_payment_methods={
@@ -76,6 +87,8 @@ class webhook(APIView):
 
     def post(self, request, format=None):
         
+        print('KURWAAAAAAAAAAAAAAAA')
+
         event = None
         payload = request.data
         event = payload
@@ -108,15 +121,19 @@ class webhook(APIView):
 
 
                 if 'note' in i and i['note'] != None:
-                    f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                    f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'], dodatkowe_mieso=i['turbo'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
                 else:
-                    f_num = FoodQuantity(food=item,order = order, number = i['num'])
+                    f_num = FoodQuantity(food=item,order = order,dodatkowe_mieso=i['turbo'], number = i['num'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
 
 
 
+                
                     
                 
                 f_num.save()
+
+            if 'cart' in request.session:
+                del self.request.session['cart']
 
             send_event('test', 'message', {'text': 'hello world'})
 
@@ -185,6 +202,8 @@ class SetCart(APIView):
         print(cart)
 
         self.request.session['cart'] = cart
+        send_event('test', 'kasa', {'text': 'hello world'})
+
 
         data = self.request.session['cart']
 
@@ -204,7 +223,6 @@ class GetFood(APIView):
 
         data = serializer.data + lst
 
-        send_event('test', 'message', {'text': 'hello world'})
 
         return Response((serializer.data + lst), status=status.HTTP_200_OK)
 
@@ -221,13 +239,13 @@ class GetCart(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-class AddToCart(APIView):    
-
+class AddtoCartKasa(APIView):
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
         item = request.data['cart']
+        price = request.data['price']
         
         
         print(item)
@@ -240,10 +258,11 @@ class AddToCart(APIView):
             for o in order:
                 if o['item'] == item:
                     o['num'] += 1
+                    o['price_combined'] = o['price']*o['num']
                     item_in_order = True
             
             if not item_in_order:
-                item_num = {'item': item, 'num':1}
+                item_num = {'item': item, 'num':1, 'price': price, 'price_combined':price}
                 order.append(item_num)
 
             (self.request.session['cart']) = order
@@ -252,7 +271,55 @@ class AddToCart(APIView):
         else:
             self.request.session['cart'] = []
             order = self.request.session['cart']
-            item_num = {'item': item, 'num':1}
+            item_num = {'item': item, 'num':1,'price': price, 'price_combined':price}
+            order.append(item_num)
+            print('here')
+            (self.request.session['cart']) = order            
+
+        data = self.request.session['cart']
+
+        print(data)
+
+        send_event('test', 'kasa', {'text': 'hello world'})
+        
+
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class AddToCart(APIView):    
+
+    def post(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        item = request.data['cart']
+        price = request.data['price']
+        
+        
+        print(item)
+        
+        if 'cart' in self.request.session:
+            order = self.request.session['cart']
+            
+            item_in_order = False
+
+            for o in order:
+                if o['item'] == item:
+                    o['num'] += 1
+                    o['price_combined'] = o['price']*o['num']
+                    item_in_order = True
+            
+            if not item_in_order:
+                item_num = {'item': item, 'num':1, 'price': price, 'price_combined':price}
+                order.append(item_num)
+
+            (self.request.session['cart']) = order
+                
+
+        else:
+            self.request.session['cart'] = []
+            order = self.request.session['cart']
+            item_num = {'item': item, 'num':1,'price': price, 'price_combined':price}
             order.append(item_num)
             print('here')
             (self.request.session['cart']) = order            
@@ -339,11 +406,10 @@ class MakeOrder(APIView):
                 for i in message:
                     item = Food.objects.get(id=i['id'])
 
-
                     if 'note' in i and i['note'] != None:
-                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'], dodatkowe_mieso=i['turbo'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
                     else:
-                        f_num = FoodQuantity(food=item,order = order, number = i['num'])
+                        f_num = FoodQuantity(food=item,order = order,dodatkowe_mieso=i['turbo'], number = i['num'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
 
 
                         
@@ -351,6 +417,9 @@ class MakeOrder(APIView):
                     f_num.save()
                 
                 send_event('test', 'message', {'text': 'hello world'})
+
+                if 'cart' in request.session:
+                    del self.request.session['cart']
 
                 
                 return Response(status=status.HTTP_200_OK)
@@ -369,14 +438,17 @@ class MakeOrder(APIView):
 
 
                     if 'note' in i and i['note'] != None:
-                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'])
+                        f_num = FoodQuantity(food=item,order = order, number = i['num'], note=i['note'], dodatkowe_mieso=i['turbo'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
                     else:
-                        f_num = FoodQuantity(food=item,order = order, number = i['num'])
+                        f_num = FoodQuantity(food=item,order = order,dodatkowe_mieso=i['turbo'], number = i['num'], frytki=i['frytki'], bataty=i['bataty'], kulki=i['kulki'], krazki=i['krazki'])
 
 
                         
                     
                     f_num.save()
+
+                if 'cart' in request.session:
+                    del self.request.session['cart']
 
                 
                 send_event('test', 'message', {'text': 'hello world'})

@@ -41,20 +41,22 @@ export default function SelectPayment() {
             let len = 0
             var total = 0
             for (const i of response.data) {    
-                len += i.num
-                total += parseFloat(i.item.price) * parseFloat(i.num);
+                total += i.price_combined
+                len += i.num;
             }
           SetCartLen(len)
           SetTotal(total);
         })
     }
 
+    
+
     const redirect = () => {
         window.location.href = ('/cart/' + id.toString())
       }
 
     const Send_delivery = () => {
-        let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note}) )
+        let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note, 'turbo' : x.item.dodatkowe_mieso, 'frytki': x.item.frytki, 'krazki': x.item.krazki,'kulki': x.item.kulki, 'bataty': x.item.bataty}) )
     
         
         
@@ -67,7 +69,7 @@ export default function SelectPayment() {
    }
 
    const Send = () => {
-    let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note}) )
+    let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note, 'turbo' : x.item.dodatkowe_mieso, 'frytki': x.item.frytki, 'krazki': x.item.krazki,'kulki': x.item.kulki, 'bataty': x.item.bataty}) )
 
     
     
@@ -96,7 +98,10 @@ export default function SelectPayment() {
             {food.item.title} x {food.num}
           </h1>
           {food.item.note ? (
-            <div className="text-sm">{food.item.note}</div>
+            <div className="text-sm text-gray-400">{food.item.note}</div>
+          ) : null}
+          {food.item.dodatkowe_mieso ? (
+            <div className="text-sm text-gray-400">Turbodoładowanie</div>
           ) : null}
         </div>
         <div className="flex flex-col mr-0 ml-auto my-auto">
@@ -115,7 +120,7 @@ export default function SelectPayment() {
 
     const renderaddresses = () => {
         return (
-            <div className="flex m-auto pt-[75px] flex-col w-full">
+            <div className="flex m-auto pt-[85px] flex-col w-full">
             <form onSubmit={() =>{setAddress(true)}}className="w-full flex flex-col p-3 h-auto justify-between bg-light-gray shadow-lg rounded-md">
                 <h2 className="text-white text-xl font-semibold">Dane do dostawy</h2>
                 <div className="mt-2">
@@ -140,15 +145,20 @@ export default function SelectPayment() {
                     <input type="text" placeholder='Wpisz swoje miasto' autoComplete='off' required id='miasto' value={Miasto} onChange={(event) => { setMiasto(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg w-full text-gray-400 transition-all rounded-md border-gray-500 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger focus:ring-opacity-75 "/>
                 </div>
                 <div className="mt-4">
+                    <label htmlFor='text' className='text-[0.93rem]  text-gray-300 ml-[2px]'>Numer telefonu</label>
+                    <input type="text" placeholder="Wpisz swój numer telefonu" autoComplete='off' required id='telefon' className="bg-payment-gray mt-1 block shadow-lg w-full text-gray-400 transition-all rounded-md border-gray-500 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger focus:ring-opacity-75 "/>
+                </div>
+                <div className="mt-4">
                     <label htmlFor='text' className='text-[0.93rem]  text-gray-300 ml-[2px]'>Dodaj notatkę (opcjonalne)</label>
                     <input type="text" placeholder='Np. Proszę nie dzwonić do drzwi' autoComplete='off' id='delivery_note' value={Notatka} onChange={(event) => { setNotatka(event.target.value)}} className="bg-payment-gray mt-1 block shadow-lg w-full text-gray-400 transition-all rounded-md border-gray-500 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger focus:ring-opacity-75 "/>
                 </div>
+                
                 
                 <button className="bg-red-burger shadow-red-burger/50 shadow-neon-shadow text-white font-semibold mb-0 mt-7 rounded-md p-3" id="submit">
                     Do płatności
                 </button>
             </form>
-            <button onClick={redirect} className="bg-red-burger text-white mt-6 rounded-md py-3 mx-auto w-[150px]">
+            <button onClick={redirect} className="text-red-burger text-lg font-semibold mt-4 rounded-md py-3 mx-auto w-[150px]">
                     Cofnij
                 </button>
         </div>

@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import CheckoutForm from './CheckoutForm';
 import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js'
+import { useParams } from "react-router-dom";
 import { loadStripe } from '@stripe/stripe-js';
 
 
@@ -14,6 +15,7 @@ export default function Checkout() {
     const [CartLen,SetCartLen] = useState(0)
     const [clientSecret, setClientSecret] = useState("");
     const isMounted = useRef(false);
+    let {id} = useParams()
 
 
 
@@ -22,11 +24,11 @@ export default function Checkout() {
     },[clientSecret])
 
     const FetchStripe = () => {
-        let list = Cart.map((x) => ({'id': x.item.id, 'num': x.num, 'note': x.item.note}) )
+        let list = Cart.map((x) => ({'id': x.item.id,'price':x.price,'price_combined':x.price_combined, 'num': x.num, 'note': x.item.note, 'turbo': x.item.dodatkowe_mieso, 'frytki': x.item.frytki, 'krazki': x.item.krazki,'kulki': x.item.kulki, 'bataty': x.item.bataty}) )
 
         const ist = JSON.stringify(list)
 
-        axios.post('/api/payment', {'cart' : ist, 'table' : 1}).then((response) => {
+        axios.post('/api/payment', {'cart' : ist, 'table' : id}).then((response) => {
             setClientSecret(response.data.clientSecret)
           }).catch(error => {console.log(error)});
     }
@@ -57,11 +59,14 @@ export default function Checkout() {
     },[Cart])
 
     const appearance = {
-        theme: 'night',
+        theme: 'flat',
         labels: 'above',
 
         variables: {
-            colorPrimary: '#f8ac32',
+            colorPrimary: '#ff2b32',
+            colorText: '#ffffff',
+            colorBackground: '#40414f',
+
         }
 
       };
@@ -74,7 +79,7 @@ export default function Checkout() {
     return (
         
         <div className="min-h-screen w-full h-auto">
-            <div id='home' className="relative flex flex-col min-h-screen pt-[4.25rem] w-full px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
+            <div id='home' className="relative flex flex-col min-h-screen pt-[4.25rem] w-full px-[3%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
             <Navbar cartlen={CartLen} />
             
             {clientSecret && (

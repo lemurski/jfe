@@ -11,6 +11,10 @@ urlpatterns = [
     path('table/<slug:id>', views.index),
     path('kontakt', views.index),
     path('choice', views.index),
-    path('delivery', views.index)
+    path('delivery', views.index),
+    path('kasa', views.index),
+    path('kasa_koszyk', views.index),
+    path('klient', views.index),
+    path('kasa_platnosc', views.index)
 ]
 

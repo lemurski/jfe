@@ -29,7 +29,7 @@ export default function Wybor() {
                 <div onClick={() => {setStolik(true)}} className="w-full cursor-pointer flex flex-col mt-6 shadow-lg p-3 h-48 rounded-md bg-light-gray">
                     <div className="flex flex-col my-auto">
                     <RiRestaurant2Fill className="w-16 text-red-burger h-16 mx-auto" />
-                    <div className="text-2xl mt-5 mx-auto text-center text-gray-100 font-semibold">Odbiór w restauracji</div>
+                    <div className="text-2xl mt-5 mx-auto text-center text-gray-100 font-semibold">Na miejscu lub na wynos</div>
                     </div>
                 </div>
                 </>

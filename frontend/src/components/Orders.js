@@ -40,22 +40,10 @@ export default function Order() {
     useEffect(() => {
         es.addEventListener('message', function (e) {
             GetCart();
+            console.log('uno')
         }, false);
         GetCart()
 
-        // const interval = setInterval(() => {
-        //     GetCart();
-        // },10000)
-
-        // const orderSocket = new WebSocket(
-        //     'ws://' + window.location.host + '/ws/order_socket/'
-        // )
-    
-        // orderSocket.onmessage = (e) => {
-        //     GetCart()         
-
-        // }
-        
     },[] )
 
     
@@ -107,7 +95,7 @@ export default function Order() {
             
             {order.ordered.map((item, key) =>
                 <div className='text-xl font-semibold' key={key}>
-                    {item.number} x {item.item} {item.note ? ('- ' + item.note) : null}
+                    {item.number} x {item.item} {item.note ? ('- ' + item.note) : null} {item.dodatkowe_mieso ? ('- Turbo') : null} {item.frytki ? ('Frytki,') : null} {item.kulki ? ('Kulki serowe') : null} {item.krazki ? ('Krazki') : null} {item.bataty ? ('Bataty') : null}
                 </div>
             )}
             
@@ -130,7 +118,7 @@ export default function Order() {
         <div key={key} className="w-[80%] relative p-3 flex flex-col bg-gray-50 mt-5 min-h-64 rounded-lg">  
             {order.ordered.map((item, key) =>
                 <div className='text-xl font-semibold' key={key}>
-                    {item.number} x {item.item} {item.note ? ('- ' + item.note) : null}
+                    {item.number} x {item.item} {item.note ? ('- ' + item.note) : null} {item.dodatkowe_mieso ? ('- Turbo,') : null} {item.frytki ? ('Frytki,') : null} {item.kulki ? ('Kulki serowe,') : null} {item.krazki ? ('Krazki,') : null} {item.bataty ? ('Bataty,') : null}
                 </div>
             )}
         <div className="flex flex-col mt-3 w-fit border-2 border-black rounded-sm text-base px-2">

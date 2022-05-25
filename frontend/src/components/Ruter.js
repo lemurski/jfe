@@ -12,6 +12,10 @@ import Glowna from './Glowna';
 import Kontakt from './Kontakt';
 import Bottom from './Bottom'
 import Wybor from './Wybor';
+import Kasa from './Kasa';
+import Kasa_koszyk from './Kasa_koszyk';
+import Klient from './Klient';
+import Kasa_platnosc from './Kasa_platnosc';
 
 
 export default function Ruter() {
@@ -23,6 +27,10 @@ export default function Ruter() {
                 <Route exact path="/" element={<Glowna />} />
                 <Route path="/table/:id" element={<Home />} />
                 <Route path='/cart/:id' element = {<Cart />} />
+                <Route path="/kasa" element={<Kasa />} />
+                <Route path='/kasa_koszyk' element = {<Kasa_koszyk />} />
+                <Route path='/kasa_platnosc' element= {<Kasa_platnosc />} />
+                <Route path='/klient' element={<Klient />} />
                 <Route path='kontakt' element = {<Kontakt />} />
                 <Route path='orders' element= {<Order />} />
                 <Route path='/checkout/:id' element={<Checkout />} />

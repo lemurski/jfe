@@ -9,7 +9,7 @@ class FoodQuantitySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.FoodQuantity
-        fields = ('number', 'item','note')
+        fields = ('number', 'item','note','dodatkowe_mieso','frytki','bataty','kulki','krazki')
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:

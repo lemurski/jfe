@@ -25,8 +25,9 @@ export default function Cart(props) {
       let len = 0;
       var total = 0;
       for (const i of response.data) {
+        total += i.price_combined
         len += i.num;
-        total += parseFloat(i.item.price) * parseFloat(i.num);
+        console.log(total)
       }
 
       console.log(total);
@@ -43,6 +44,7 @@ export default function Cart(props) {
     let c = Cart;
 
     c[e].num += 1;
+    c[e].price_combined = (c[e].num * c[e].price)
 
     axios
       .post("/api/set_cart", {
@@ -53,9 +55,11 @@ export default function Cart(props) {
         let len = 0;
         var total = 0;
         for (const i of response.data) {
+          total += i.price_combined
           len += i.num;
-          total += parseFloat(i.item.price) * parseFloat(i.num);
+          console.log(total)
         }
+        console.log(total)
         SetCartLen(len);
         SetTotal(total);
       });
@@ -69,7 +73,10 @@ export default function Cart(props) {
     if (c[e].num === 0) {
       c.splice(e, 1);
     }
-
+    else {
+      c[e].price_combined = (c[e].num * c[e].price)
+    }
+    console.log(c)
     axios
       .post("/api/set_cart", {
         cart: c,
@@ -79,8 +86,8 @@ export default function Cart(props) {
         let len = 0;
         var total = 0;
         for (const i of response.data) {
+          total += i.price_combined
           len += i.num;
-          total += parseFloat(i.item.price) * parseFloat(i.num);
         }
         SetCartLen(len);
         SetTotal(total);
@@ -98,12 +105,27 @@ export default function Cart(props) {
             {food.item.title} x {food.num}
           </h1>
           {food.item.note ? (
-            <div className="text-sm">{food.item.note}</div>
+            <div className="text-sm text-gray-400">{food.item.note}</div>
+          ) : null}
+          {food.item.dodatkowe_mieso ? (
+            <div className="text-sm text-gray-400">Turbodoładowanie</div>
+          ) : null}
+          {food.item.frytki ? (
+            <div className="text-sm text-gray-400">Fytki</div>
+          ) : null}
+          {food.item.kulki ? (
+            <div className="text-sm text-gray-400">Kulki serowe</div>
+          ) : null}
+          {food.item.krazki ? (
+            <div className="text-sm text-gray-400">Krazki cebulowe</div>
+          ) : null}
+          {food.item.bataty ? (
+            <div className="text-sm text-gray-400">Bataty</div>
           ) : null}
         </div>
         <div className="flex flex-col mr-0 ml-auto my-auto">
           <div className="text-center mr-0 ml-auto py-1 px-2 bg-red-burger rounded-lg text-base">
-            {(parseFloat(food.item.price) * parseFloat(food.num)).toFixed(2)} zł
+            {(food.price_combined.toFixed(2))} zł
           </div>
           <div className="flex mt-6">
             <AiOutlineMinus
