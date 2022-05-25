@@ -52,7 +52,7 @@ export default function Navbar_home(props) {
             return (
                 <div>
                     <AnimatePresence >
-                    <motion.div layout animate={{x: 0}} initial={{x: 400}} exit={{x: 400}}>
+                    <motion.div layout animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
                         <div className="fixed flex flex-col text-white text-2xl font-semibold items-center pb-[4.25rem] top-0 left-0 bg-dark-gray z-50 w-screen h-screen">
                             <div onClick={changeSidebar} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
                             <div className="flex my-auto h-1/2 text-2xl justify-evenly flex-col items-center">
