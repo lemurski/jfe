@@ -330,19 +330,20 @@ export default function Home() {
         return (
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
-            <div className="fixed rounded-lg overflow-scroll z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen min-h-screen bg-dark-gray">
-                <div className="relative w-full h-full flex-col flex py-14 items-center">
-                <div onClick={CloseDetails} className="absolute top-8 right-4"> <MdClear className='h-8 text-red-burger w-8' /> </div>
-                <div className="flex flex-col w-full pb-[88px] px-4 my-auto text-gray-200 items-center">
-                <img className='rounded-2xl object-cover w-56 h-44' src={Item.image}></img>
-                <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
-                <p className="mt-[18px] text-center text-sm text-gray-400 font-semibold">{Item.description}</p>
-                {dodatkowe_mieso(Item)}
-                {dodatki_lista(Item)}
-                <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full resize-none h-28 rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger text-gray-300 bg-light-gray focus:ring-opacity-50'></textarea>
-                <button onClick={add} className="fixed bottom-4 py-3 bg-red-burger w-[94%] text-gray-100 tracking-wide text-lg mt-6 mb-0 font-semibold border-dark-gray rounded-xl">{Item.price} zł</button>
+            <div className="fixed rounded-lg flex flex-col px-[5%] overflow-scroll z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen min-h-screen bg-dark-gray">
+                <div className="absolute z-30 top-0 flex py-3 h-[4.25rem] w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
                 </div>
+                <div className="relative w-full h-full flex-col flex py-[4.25rem] items-center">
+                    <div className="flex flex-col w-full pb-[88px] my-auto text-gray-200 items-center">
+                    <img className='rounded-2xl object-cover w-56 h-44' src={Item.image}></img>
+                    <div className='text-xl mt-6 font-bold leading-7 text-white '>{Item.title}</div>
+                    <p className="mt-[18px] text-center text-sm text-gray-400 font-semibold">{Item.description}</p>
+                    {dodatkowe_mieso(Item)}
+                    {dodatki_lista(Item)}
+                    <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full resize-none h-28 rounded-md border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger text-gray-300 bg-light-gray focus:ring-opacity-50'></textarea>
+                    </div>
                 </div>
+                <button onClick={add} className="fixed bottom-4 py-3 bg-red-burger w-[90%] text-gray-100 tracking-wide text-lg mt-6 mb-0 font-semibold border-dark-gray rounded-xl">{Item.price} zł</button>
             </div>
             </motion.div>
 
