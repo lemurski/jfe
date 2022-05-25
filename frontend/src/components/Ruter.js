@@ -16,12 +16,14 @@ import Kasa from './Kasa';
 import Kasa_koszyk from './Kasa_koszyk';
 import Klient from './Klient';
 import Kasa_platnosc from './Kasa_platnosc';
+import ScrollToTop from './ScrollToTop';
 
 
 export default function Ruter() {
 
     return (
         <Router>
+            <ScrollToTop />
             <div className='flex flex-col w-screen'>
             <Routes>
                 <Route exact path="/" element={<Glowna />} />

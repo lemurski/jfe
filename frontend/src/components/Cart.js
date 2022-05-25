@@ -181,7 +181,7 @@ export default function Cart(props) {
       return (
         <div
           id="home"
-          className="relative flex flex-col w-full h-auto px-[4%] m-auto mb-[128px] lg:px-[15%] transition-all duration-500 "
+          className="relative flex flex-col w-full h-auto px-[4%] m-auto lg:px-[15%] transition-all duration-500 "
         >
           <div className="w-full m-auto flex flex-col p-3 bg-light-gray h-96 shadow-lg rounded-md ">
           <TiShoppingCart className="w-32 h-32 text-red-burger mt-5 mx-auto" />
