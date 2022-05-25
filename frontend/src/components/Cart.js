@@ -152,7 +152,7 @@ export default function Cart(props) {
         <>
           <div
             id="home"
-            className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
+            className="relative flex flex-col w-full h-auto px-[4%] min-h-full lg:px-[15%] transition-all duration-500 "
           >
             <div className="flex flex-col overflow-scroll mt-[92px] mb-auto">
               <div className="text-lg text-gray-200 font-bold">
@@ -181,7 +181,7 @@ export default function Cart(props) {
       return (
         <div
           id="home"
-          className="relative flex flex-col w-full h-auto px-[4%] mb-[128px] min-h-full lg:px-[15%] transition-all duration-500 "
+          className="relative flex flex-col w-full h-auto px-[4%] m-auto mb-[128px] lg:px-[15%] transition-all duration-500 "
         >
           <div className="w-full m-auto flex flex-col p-3 bg-light-gray h-96 shadow-lg rounded-md ">
           <TiShoppingCart className="w-32 h-32 text-red-burger mt-5 mx-auto" />
@@ -197,7 +197,7 @@ export default function Cart(props) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-dark-gray h-auto">
+    <div className="min-h-screen w-full flex flex-col bg-dark-gray h-auto">
       <Navbar cartlen={CartLen} />
       {renderpayment()}
     </div>
