@@ -333,7 +333,7 @@ export default function Home() {
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
             <div className="fixed rounded-lg flex flex-col px-[5%] z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen min-h-screen bg-dark-gray">
-                <div className="fixed z-30 top-0 flex py-3 h-[4.25rem] w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
+                <div className="absolute z-30 top-0 flex py-3 w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
                 </div>
                 <div className="relative w-full  overflow-auto scroll h-full flex-col flex py-[3.25rem] items-center">
                     <div className="flex flex-col w-full my-auto text-gray-200 items-center">
@@ -342,11 +342,11 @@ export default function Home() {
                     <p className="mt-[18px] text-center text-sm text-gray-400 font-semibold">{Item.description}</p>
                     {dodatkowe_mieso(Item)}
                     {dodatki_lista(Item)}
-                    <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full mb-10 resize-none h-28 rounded-lg border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger text-gray-300 bg-light-gray focus:ring-opacity-50'></textarea>
+                    <textarea onChange={HandleNote} placeholder="Dodaj notatkę do dania" className='mt-6 w-full mb-24 resize-none h-28 rounded-lg border-gray-600 p-3 focus:border-gray-300 focus:ring focus:ring-red-burger text-gray-300 bg-light-gray focus:ring-opacity-50'></textarea>
                     </div>
                 </div>
-                <div className='fixed bg-dark-gray bottom-4 w-[90%]'>
-                <button onClick={add} className=" py-3 bg-red-burger w-full text-gray-100 tracking-wide text-lg mt-6 mb-0 font-semibold border-dark-gray rounded-lg">{Item.price} zł</button>
+                <div className='fixed bg-dark-gray bottom-0 py-4 w-[90%]'>
+                <button onClick={add} className=" py-3 bg-red-burger w-full text-gray-100 tracking-wide text-lg font-semibold border-dark-gray rounded-lg">{Item.price} zł</button>
 
                 </div>
             </div>
