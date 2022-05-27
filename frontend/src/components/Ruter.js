@@ -41,7 +41,6 @@ export default function Ruter() {
                 <Route path='choice' element={<Wybor />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
-            <Bottom />
             </div>
         </Router>
     )

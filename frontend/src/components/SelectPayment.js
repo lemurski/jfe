@@ -5,6 +5,7 @@ import {FaCashRegister} from 'react-icons/fa'
 import {BsPhone, BsArrowLeft} from 'react-icons/bs'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { Link, useParams } from "react-router-dom";
+import Bottom from './Bottom';
 
 
 
@@ -309,6 +310,8 @@ export default function SelectPayment() {
             <Navbar cartlen={CartLen} />
             {delvstables()}
         </div>
+        <Bottom />
+
         </div>
     )
 }

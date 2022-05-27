@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js'
 import { useParams } from "react-router-dom";
 import { loadStripe } from '@stripe/stripe-js';
+import Bottom from './Bottom';
 
 
 const stripePromise = loadStripe('pk_test_51KPqVjIe60pKGrAOnS4gEdD930envC2Iibv1UbuI0kiRWdrjwKrQatPS1r6iqx4nQVUi9ZvymfMaBlwRnWadA9pZ00gpGVhYCD')
@@ -88,6 +89,8 @@ export default function Checkout() {
                 </Elements>
             )}      
             </div>
+            <Bottom />
+
         </div>
         
     )

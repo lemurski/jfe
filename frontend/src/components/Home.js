@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { useParams } from 'react-router-dom';
 import {MdClear} from 'react-icons/md'
 import { AnimatePresence,motion } from 'framer-motion';
+import Bottom from './Bottom';
 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -128,17 +129,15 @@ export default function Home() {
     }
 
     const handlecatchange = (e) => {
-        var element = document.getElementById('first')
+        var element = document.getElementById(selectedCategory)
         element.classList.remove('text-white')
-        element.id = ''
         SetselectedCategory(e.target.textContent)
         Setitemloading(true)
         Setwidth(e.target.offsetWidth)
         Setleftmargin(e.target.offsetLeft)
         e.target.classList.add('text-white')
-        e.target.id = 'first'
 
-        setTimeout(() => {Setitemloading(false)},400)
+        setTimeout(() => {Setitemloading(false)},300)
     }
 
 
@@ -178,12 +177,12 @@ export default function Home() {
         <div className="fixed w-[90%]">
         <div className="flex cursor-pointer scroll flex-nowrap w-full pr-2 relative bg-dark-gray pb-4 text-lg text-text-gray font-semibold overflow-auto">
                 <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
-                <h3 id='first' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Sałatki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Dla Dzieci</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Napoje</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Desery</h3>
+                <h3 id='Przystawki' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
+                <h3 id='Burgery' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
+                <h3 id='Sałatki' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Sałatki</h3>
+                <h3 id='Dla Dzieci' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Dla Dzieci</h3>
+                <h3 id='Napoje' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Napoje</h3>
+                <h3 id='Desery' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Desery</h3>
             </div>
             </div>
             <div className='pt-6'>
@@ -191,12 +190,9 @@ export default function Home() {
             {/* <div className="mb-6">
                 {renderAll}
             </div> */}
-            <AnimatePresence >
-            {itemloading ? null : showMenu()}
-            </AnimatePresence>
             <div>
             <AnimatePresence>
-            {Displayed ? ItemDetails() : null}
+            {Displayed ? ItemDetails() : itemloading ? null : showMenu()}
             </AnimatePresence>
             </div>
             <div className="flex h-7"> </div>
@@ -335,7 +331,7 @@ export default function Home() {
             <div className="fixed rounded-lg flex flex-col px-[5%] z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen min-h-screen bg-dark-gray">
                 <div className="fixed z-30 top-0 flex py-3 w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
                 </div>
-                <div className="relative w-full  overflow-auto scroll h-full flex-col flex py-[3.25rem] items-center">
+                <div className="relative w-full  overflow-auto scroll h-full flex-col flex py-[4.25rem] items-center">
                     <div className="flex flex-col w-full my-auto text-gray-200 items-center">
                     <img className='rounded-2xl object-cover w-56 h-44' src={Item.image}></img>
                     <div className='text-xl mt-[18px] font-bold leading-7 text-white '>{Item.title}</div>
@@ -366,8 +362,9 @@ export default function Home() {
         {Displayed ? null : renderNavBar()}
             <div id='home' className="min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] bg-dark-gray">
             {loading ? renderLoading() : renderAll()}
-
+            
             </div>
+        {Displayed ? null : <Bottom />}
         </div>
     )
 }
