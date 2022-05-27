@@ -364,7 +364,7 @@ export default function Home() {
     return (
         <div className="min-h-screen font-poppins w-full h-auto">
         {Displayed ? null : renderNavBar()}
-            <div id='home' className=" min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] bg-dark-gray">
+            <div id='home' className="min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] bg-dark-gray">
             {loading ? renderLoading() : renderAll()}
 
             </div>
