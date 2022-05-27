@@ -333,7 +333,7 @@ export default function Home() {
             <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
             {/* <div onClick={CloseDetails} className="top-0 z-20 left-0 transition-all bottom-0 right-0 fixed bg-gray-800/70  "></div> */}
             <div className="fixed rounded-lg flex flex-col px-[5%] z-50 left-0 right-0 m-auto top-0 bottom-0 w-screen min-h-screen bg-dark-gray">
-                <div className="absolute z-30 top-0 flex py-3 w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
+                <div className="fixed z-30 top-0 flex py-3 w-[90%]"><div onClick={CloseDetails} className="my-auto mr-0 ml-auto"><MdClear className='h-8 text-dark-gray  bg-red-burger rounded-lg w-8' /></div> 
                 </div>
                 <div className="relative w-full  overflow-auto scroll h-full flex-col flex py-[3.25rem] items-center">
                     <div className="flex flex-col w-full my-auto text-gray-200 items-center">
