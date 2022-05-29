@@ -4,6 +4,8 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import { useParams } from 'react-router-dom';
 import {MdClear} from 'react-icons/md'
+import {BiLeftArrow} from 'react-icons/bi'
+import {RiArrowRightSLine, RiArrowLeftSLine} from 'react-icons/ri'
 import { AnimatePresence,motion } from 'framer-motion';
 import Bottom from './Bottom';
 
@@ -31,6 +33,8 @@ export default function Home() {
     const[krazki,setKrazki] = useState(false)
     const[Kulki,setKulki] = useState(false)
     const[bataty,setBataty] = useState(false)
+    const[left,setLeft] = useState(false)
+    const[right,setRight] = useState(true)
 
 
 
@@ -136,7 +140,7 @@ export default function Home() {
         Setwidth(e.target.offsetWidth)
         Setleftmargin(e.target.offsetLeft)
         e.target.classList.add('text-white')
-
+        window.scrollTo(0, 0);
         setTimeout(() => {Setitemloading(false)},300)
     }
 
@@ -171,11 +175,54 @@ export default function Home() {
         )
     }
 
+    const log = (e) => {
+        if (e.target.scrollLeft > 10) {
+            setLeft(true)
+        }
+        else {
+            setLeft(false)
+        }
+    }
+
+    const rog = (e) => {
+        var element = document.getElementById('scr')
+        let width = element.offsetWidth
+
+        if (width < 540){
+            if ((508 - (e.target.offsetWidth + e.target.scrollLeft)) < 10) {
+                setRight(false)
+            }
+            else {
+                setRight(true)
+            }
+        }
+
+
+    }
     
+    const renderleftarrow = () => {
+        return (
+            <div className="absolute z-20 bg-light-gray/50 rounded-full top-[0.19rem]">
+                <RiArrowLeftSLine className="w-6 h-6 text-red-burger"/>
+            </div>
+        )
+    }
+
+    const renderrightarrow = () => {
+        return (
+            <div className="absolute z-20 bg-light-gray/50 rounded-full right-0 top-[0.19rem]">
+                <RiArrowRightSLine className="w-6 h-6 text-red-burger"/>
+            </div>
+        )
+    }
+
     const renderAll = () => (
         <>
         <div className="fixed w-[90%]">
-        <div className="flex cursor-pointer scroll flex-nowrap w-full pr-2 relative bg-dark-gray pb-4 text-lg text-text-gray font-semibold overflow-auto">
+        {left ? renderleftarrow() : null}
+        {right ? renderrightarrow() : null}
+
+        <div id='biga' onScroll={(e) => {rog(e), log(e)}} className="flex cursor-pointer scroll z-10 flex-nowrap w-full pr-2 relative bg-dark-gray pb-4 text-lg text-text-gray font-semibold overflow-auto">
                 <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
                 <h3 id='Przystawki' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
                 <h3 id='Burgery' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
@@ -273,56 +320,6 @@ export default function Home() {
         }
     }
 
-    const dodatki_kafelki = (e) => {
-        if (e.category === 'Burgery') {
-            return(
-                <>
-                <h3 className='text-white font-semibold mx-auto mt-4'>Dobierz przystawkę do zestawu</h3>
-                <div className='flex justify-evenly w-full mt-4'>
-                    <div className='flex flex-col'>
-                    <div className='flex flex-col'>
-                        <div className='flex w-[115px] h-[115px] mx-auto rounded-lg bg-light-gray shadow-lg flex-col'>
-                            <div className='flex flex-col m-auto'>
-                            <img className='w-24 rounded-md object-cover h-24' src="/staticfiles/images/941f50-splendid-table-french-fries.jpg" />
-                            </div>
-                        </div>
-                        <p className='text-gray-300 text-[0.925rem] text-center leading-none mt-3'>Frytki - 7zł</p>
-                        </div>
-                        <div className='flex mt-4 flex-col'>
-                        <div className='flex w-[115px] h-[115px] mx-auto rounded-lg bg-light-gray shadow-lg flex-col'>
-                            <div className='flex flex-col m-auto'>
-                            <img className='w-24 rounded-md object-cover h-24' src="/staticfiles/images/frytki-z-batatow.jpg" />
-                            </div>
-                        </div>
-                        <p className='text-gray-300 text-[0.925rem] text-center leading-none mt-3'>Bataty - 9zł</p>
-                        </div>
-                    </div>
-                    <div className='flex flex-col'>
-                        <div className='flex flex-col'>
-                        <div className='flex w-[115px] h-[115px] mx-auto rounded-lg bg-light-gray shadow-lg flex-col'>
-                            <div className='flex flex-col m-auto'>
-                            <img className='w-24 rounded-md object-cover h-24' src="/staticfiles/images/burger-king-jalapeno-cheesy-bites.jpg" />
-                            </div>
-                        </div>
-                        <p className='text-gray-300 text-[0.925rem] text-center leading-none mt-3'>Kulki serowe - 10zł</p>
-                        </div>
-                        <div className='flex mt-4 flex-col'>
-                        <div className='flex w-[115px] h-[115px] mx-auto rounded-lg bg-light-gray shadow-lg flex-col'>
-                            <div className='flex flex-col m-auto'>
-                            <img className='w-24 rounded-md object-cover h-24' src="/staticfiles/images/BFV9112_MozzarellaStickOnionRings.jpg" />
-                            </div>
-                        </div>
-                        <p className='text-gray-300 text-[0.925rem] text-center leading-none mt-3'>Krążki cebulowe - 9zł</p>
-                        </div>
-                    </div>
-                </div>
-                </>
-            )
-        }
-        else {
-            null
-        }
-    }
 
     const ItemDetails = () => {
         return (
@@ -358,7 +355,7 @@ export default function Home() {
     },[])
 
     return (
-        <div className="min-h-screen font-poppins w-full h-auto">
+        <div id='scr' className="min-h-screen font-poppins w-full h-auto">
         {Displayed ? null : renderNavBar()}
             <div id='home' className="min-h-screen w-full pt-[68px] h-auto px-[5%] lg:px-[15%] bg-dark-gray">
             {loading ? renderLoading() : renderAll()}

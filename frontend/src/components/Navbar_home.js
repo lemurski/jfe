@@ -4,6 +4,7 @@ import {TiShoppingCart} from "react-icons/ti"
 import { Link } from "react-router-dom";
 import { AnimatePresence,motion } from 'framer-motion';
 import {MdClear} from 'react-icons/md'
+import Logo from './Logo';
 
 
 
@@ -33,13 +34,15 @@ export default function Navbar_home(props) {
             return (
                 <div className="fixed top-0 flex z-30 items-center blurek px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
                 <Link to="/" className="flex dark:text-red-burger text-dark-gray transition-all cursor-pointer items-center hover:scale-105 ease-in-out duration-500">
-                    <GiBull className="w-10 h-10"/>
+                    <div className="w-14 h-14 mt-[2px]">
+                        <Logo ></Logo>
+                    </div>
                 </Link>
                 <Link to="/" className="mx-auto text-red-burger sm:flex transition-all my-auto font-Coustard text-4xl font-bold">
                 <div className="">Wół I Stół</div>
                 </Link>
                 
-                <GiHamburgerMenu onClick={changeSidebar} className="w-8 h-8 -mt-1 mr-0 text-red-burger"/>
+                <div className="w-[44px] flex"><GiHamburgerMenu onClick={changeSidebar} className="w-8 h-8 ml-auto -mt-1 mr-0 text-red-burger"/></div>
                 
                 
                 </div>

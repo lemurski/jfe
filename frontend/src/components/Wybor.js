@@ -65,9 +65,11 @@ export default function Wybor() {
     return (
         <div id='home' className="relative min-h-screen w-full flex flex-col h-auto px-[5%] lg:px-[15%] transition-all duration-500 bg-dark-gray">
         <Navbar_home />
+        <div className="h-full pt-[68px] flex flex-col">
         <div className="flex m-auto flex-col w-full">
             {stolik ? rendertable() : rendermain()}
                 
+            </div>
             </div>
         </div>
     )

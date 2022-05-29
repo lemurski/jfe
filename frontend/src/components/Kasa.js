@@ -7,6 +7,7 @@ import { AnimatePresence,motion } from 'framer-motion';
 import {FaHamburger} from "react-icons/fa";
 import {TiShoppingCart} from "react-icons/ti"
 import { Link, useParams } from "react-router-dom";
+import Logo from './Logo';
 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -130,17 +131,15 @@ export default function Kasa() {
     }
 
     const handlecatchange = (e) => {
-        var element = document.getElementById('first')
+        var element = document.getElementById(selectedCategory)
         element.classList.remove('text-white')
-        element.id = ''
         SetselectedCategory(e.target.textContent)
         Setitemloading(true)
         Setwidth(e.target.offsetWidth)
         Setleftmargin(e.target.offsetLeft)
         e.target.classList.add('text-white')
-        e.target.id = 'first'
-
-        setTimeout(() => {Setitemloading(false)},400)
+        window.scrollTo(0, 0);
+        setTimeout(() => {Setitemloading(false)},300)
     }
 
 
@@ -177,15 +176,15 @@ export default function Kasa() {
     
     const renderAll = () => (
         <>
-        <div className="fixed w-[90%] z-30">
+        <div className="fixed w-[90%]">
         <div className="flex cursor-pointer scroll flex-nowrap w-full pr-2 relative bg-dark-gray pb-4 text-lg text-text-gray font-semibold overflow-auto">
                 <div style={{width: width, left: leftmargin}} className="absolute transition-all h-[3px] bg-red-burger top-7 rounded-lg"></div>
-                <h3 id='first' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Sałatki</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Dla Dzieci</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Napoje</h3>
-                <h3 onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Desery</h3>
+                <h3 id='Przystawki' onClick={(e) =>{handlecatchange(e)}} className='flex-0  border-red-burger text-white'>Przystawki</h3>
+                <h3 id='Burgery' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Burgery</h3>
+                <h3 id='Sałatki' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Sałatki</h3>
+                <h3 id='Dla Dzieci' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Dla Dzieci</h3>
+                <h3 id='Napoje' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Napoje</h3>
+                <h3 id='Desery' onClick={(e) =>{handlecatchange(e)}} className='ml-3  border-red-burger flex-0 '>Desery</h3>
             </div>
             </div>
             <div className='pt-6'>
@@ -193,12 +192,11 @@ export default function Kasa() {
             {/* <div className="mb-6">
                 {renderAll}
             </div> */}
-            <AnimatePresence >
-            {itemloading ? null : showMenu()}
-            </AnimatePresence>
+            <div>
             <AnimatePresence>
-            {Displayed ? ItemDetails() : null}
+            {Displayed ? ItemDetails() : itemloading ? null : showMenu()}
             </AnimatePresence>
+            </div>
             <div className="flex h-7"> </div>
             </div>
         </>
@@ -231,7 +229,9 @@ export default function Kasa() {
         return(
             <div className="fixed top-0 flex z-30 dark:bg-dark-gray dark:backdrop-blur-lg  items-center px-[5%] lg:px-[15%] py-3 left-0 h-[4.25rem] w-full ">
             <Link to='/kasa' className="flex dark:text-red-burger text-dark-gray transition-all cursor-pointer items-center hover:scale-105 ease-in-out duration-500">
-                <FaHamburger className="w-10 h-10"/>
+                <div className="w-14 h-14 mt-[2px]">
+                    <Logo />
+                </div>
                 <div className="ml-2 sm:flex hidden transition-all text-2xl font-semibold">Stół Na Wół</div>
             </Link>
             
