@@ -24,7 +24,7 @@ export default function Glowna() {
 
 
     const redirect = () => {
-        window.location.href = '/choice';
+        window.open('/choice');
     }
 
    
